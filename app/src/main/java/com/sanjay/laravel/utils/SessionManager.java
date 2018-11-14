@@ -8,19 +8,17 @@ public class SessionManager {
     // LogCat tag
     private static String TAG = SessionManager.class.getSimpleName();
 
-    // Shared Preferences
-    SharedPreferences pref;
-
-    SharedPreferences.Editor editor;
-    Context _context;
-
-    // Shared pref mode
-    int PRIVATE_MODE = 0;
-
     // Shared preferences file name
-    private static final String PREF_NAME = "AndroidHiveLogin";
+    private static final String PREF_NAME = "laravel";
+    private static final String Token = "token";
+    // Shared Preferences
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
+    private Context _context;
 
     private static final String KEY_IS_LOGGEDIN = "isLoggedIn";
+    // Shared pref mode
+    private int PRIVATE_MODE = 0;
 
     public SessionManager(Context context) {
         this._context = context;
@@ -38,8 +36,16 @@ public class SessionManager {
         Log.d(TAG, "User login session modified!");
     }
 
-    public boolean isLoggedIn(){
+    public boolean isLoggedIn() {
         return pref.getBoolean(KEY_IS_LOGGEDIN, false);
     }
 
+    public String getToken() {
+        return pref.getString(Token, null);
+    }
+
+    public void setToken(String token) {
+        editor.putString(Token, token);
+        editor.commit();
+    }
 }

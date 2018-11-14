@@ -3,8 +3,6 @@ package com.sanjay.laravel;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.sanjay.laravel.models.RegisterRequest;
 import com.sanjay.laravel.models.RegisterSuccessResponse;
-import com.sanjay.laravel.models.UserSuccessResponse;
 import com.sanjay.laravel.retroFit.ApiClient;
 import com.sanjay.laravel.retroFit.ApiInterface;
 import com.sanjay.laravel.utils.SessionManager;
@@ -42,13 +39,13 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        inputFullName = (EditText) findViewById(R.id.name);
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
-        btnRegister = (Button) findViewById(R.id.btnRegister);
-        btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
+        inputFullName = findViewById(R.id.name);
+        inputEmail = findViewById(R.id.email);
+        inputPassword = findViewById(R.id.password);
+        btnRegister = findViewById(R.id.btnRegister);
+        btnLinkToLogin = findViewById(R.id.btnLinkToLoginScreen);
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -105,6 +102,7 @@ public class RegistrationActivity extends AppCompatActivity {
         progressDoalog.setMessage("Its loading....");
         progressDoalog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDoalog.show();
+
         RegisterRequest registerRequest = new RegisterRequest();
         registerRequest.setName(name);
         registerRequest.setEmail(email);

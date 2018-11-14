@@ -4,9 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,11 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.sanjay.laravel.models.LoginResponse;
 import com.sanjay.laravel.models.LogoutSuccessResponse;
+import com.sanjay.laravel.models.UserSuccessResponse;
 import com.sanjay.laravel.retroFit.ApiClient;
 import com.sanjay.laravel.retroFit.ApiInterface;
 import com.sanjay.laravel.utils.SessionManager;
@@ -28,7 +28,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 import static com.sanjay.laravel.MyApplication.getContext;
 
@@ -38,35 +37,32 @@ public class DashboardActivity extends AppCompatActivity
     private TextView txtName;
     private TextView txtEmail;
     private Button btnLogout;
-    String accesstoken = null;
-
+    public SessionManager session;
     Realm realm;
-    private SessionManager session;
+    String token = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<LoginResponse> realmResults = realm.where(LoginResponse.class).findAll();
-        LoginResponse l = realmResults.get(0);
-        accesstoken = l.getAccessToken();
 
 
-        txtName = (TextView) findViewById(R.id.name);
-        txtEmail = (TextView) findViewById(R.id.email);
-        btnLogout = (Button) findViewById(R.id.btnLogout);
+        txtName = findViewById(R.id.name);
+        txtEmail = findViewById(R.id.email);
+        btnLogout = findViewById(R.id.btnLogout);
         // session manager
-        session = new SessionManager(getApplicationContext());
-
+        session = new SessionManager(DashboardActivity.this);
+        token = "Bearer " + session.getToken();
+        viewusercall();
 //        if (!session.isLoggedIn()) {
 //            logoutUser();
 //        }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,19 +71,28 @@ public class DashboardActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // Logout button click event
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                logoutUser();
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -137,7 +142,7 @@ public class DashboardActivity extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -149,8 +154,8 @@ public class DashboardActivity extends AppCompatActivity
 
         // Launching the login activity
         logoutcall();
-        RealmResults<LoginResponse> realmResults=realm.where(LoginResponse.class).equalTo("access_token",accesstoken).findAll();
-        realmResults.deleteAllFromRealm();
+//        RealmResults<LoginResponse> realmResults = realm.where(LoginResponse.class).equalTo("access_token", accesstoken).findAll();
+//        realmResults.deleteAllFromRealm();
         Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
@@ -165,7 +170,7 @@ public class DashboardActivity extends AppCompatActivity
         progressDoalog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDoalog.show();
 
-        String token = "Bearer " + accesstoken;
+//        String token = "Bearer " + session.getToken();
 
         Observable<LogoutSuccessResponse> observable = apiInterface.LOGOUT_SUCCESS_RESPONSE_OBSERVABLE(token)
                 .subscribeOn(Schedulers.newThread())
@@ -192,6 +197,53 @@ public class DashboardActivity extends AppCompatActivity
             @Override
             public void onNext(LogoutSuccessResponse Listdata) {
 
+
+            }
+
+        });
+
+    }
+
+    public void viewusercall() {
+        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        final ProgressDialog progressDoalog;
+        progressDoalog = new ProgressDialog(DashboardActivity.this);
+        progressDoalog.setMax(100);
+        progressDoalog.setMessage("Its loading....");
+        progressDoalog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDoalog.show();
+
+
+        Observable<UserSuccessResponse> observable = apiInterface.USER_SUCCESS_RESPONSE_OBSERVABLE(token)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+        observable.subscribe(new Observer<UserSuccessResponse>() {
+
+            @Override
+            public void onError(Throwable e) {
+                progressDoalog.hide();
+                Toast.makeText(getContext(), "error" + e, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onComplete() {
+                progressDoalog.hide();
+                Toast.makeText(getContext(), "user details retrieved", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(UserSuccessResponse Listdata) {
+                String name = Listdata.getName();
+                String email = Listdata.getEmail();
+
+                // Displaying the user details on the screen
+                txtName.setText(name);
+                txtEmail.setText(email);
 
             }
 
