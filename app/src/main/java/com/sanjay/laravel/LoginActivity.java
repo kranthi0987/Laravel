@@ -149,8 +149,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onNext(LoginResponse Listdata) {
                 session.setToken(Listdata.getAccessToken());
-
-
             }
 
         });

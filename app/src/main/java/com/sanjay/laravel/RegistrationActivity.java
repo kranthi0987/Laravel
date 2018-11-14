@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.sanjay.laravel.models.RegisterRequest;
 import com.sanjay.laravel.models.RegisterSuccessResponse;
 import com.sanjay.laravel.retroFit.ApiClient;
@@ -19,6 +21,8 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+
+import java.util.regex.Pattern;
 
 import static com.sanjay.laravel.MyApplication.getContext;
 
@@ -34,6 +38,9 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText inputPassword;
     private ProgressDialog pDialog;
     private SessionManager session;
+    String[] domain = null;
+    //defining AwesomeValidation object
+    private AwesomeValidation awesomeValidation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +48,25 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+
         inputFullName = findViewById(R.id.name);
         inputEmail = findViewById(R.id.email);
         inputPassword = findViewById(R.id.password);
         btnRegister = findViewById(R.id.btnRegister);
         btnLinkToLogin = findViewById(R.id.btnLinkToLoginScreen);
+
+//        //adding validation to edittexts
+//        awesomeValidation.addValidation(this, R.id.editTextName, "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$", R.string.nameerror);
+//        awesomeValidation.addValidation(this, R.id.editTextEmail, Patterns.EMAIL_ADDRESS, R.string.nameerror);
+//        awesomeValidation.addValidation(this, R.id.editTextMobile, "^[2-9]{2}[0-9]{8}$", R.string.nameerror);
+//        awesomeValidation.addValidation(this, R.id.editTextDob, "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$", R.string.nameerror);
+//        awesomeValidation.addValidation(this, R.id.editTextAge, Range.closed(13, 60), R.string.ageerror);
+//        if (awesomeValidation.validate()) {
+//            Toast.makeText(this, "Validation Successfull", Toast.LENGTH_LONG).show();
+
+        //process the data further
+//        }
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -69,7 +90,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 String name = inputFullName.getText().toString().trim();
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
-
+                domain = email.split(Pattern.quote("@"));
                 if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
                     Registercall(name, email, password);
                 } else {
@@ -107,6 +128,7 @@ public class RegistrationActivity extends AppCompatActivity {
         registerRequest.setName(name);
         registerRequest.setEmail(email);
         registerRequest.setPassword(password);
+        registerRequest.setPasswordConfirmation(password);
 
 
         Observable<RegisterSuccessResponse> observable = apiInterface.REGISTER_SUCCESS_RESPONSE_OBSERVABLE(registerRequest)
@@ -122,7 +144,11 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onComplete() {
                 progressDoalog.hide();
-
+                Intent i = new Intent(getApplicationContext(),
+                        SignupActivity.class);
+                i.putExtra("domain", domain[0]);
+                startActivity(i);
+                finish();
                 Toast.makeText(getContext(), "Completed", Toast.LENGTH_SHORT).show();
             }
 
