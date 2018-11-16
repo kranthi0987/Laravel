@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.sanjay.laravel.models.LogoutSuccessResponse;
@@ -78,6 +79,11 @@ public class DashboardActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View hView = navigationView.getHeaderView(0);
+        ImageView nav_avatar = hView.findViewById(R.id.nav_avatar);
+        TextView nav_user = hView.findViewById(R.id.nav_name);
+        TextView nav_email = hView.findViewById(R.id.nav_email);
+
         navigationView.setNavigationItemSelectedListener(this);
 
         // Logout button click event
@@ -139,7 +145,7 @@ public class DashboardActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
-
+            logoutUser();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -240,10 +246,11 @@ public class DashboardActivity extends AppCompatActivity
             public void onNext(UserSuccessResponse Listdata) {
                 String name = Listdata.getName();
                 String email = Listdata.getEmail();
-
+                String avatar = Listdata.getAvatarUrl();
                 // Displaying the user details on the screen
                 txtName.setText(name);
                 txtEmail.setText(email);
+
 
             }
 

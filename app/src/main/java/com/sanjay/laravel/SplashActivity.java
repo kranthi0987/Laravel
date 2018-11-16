@@ -3,10 +3,10 @@ package com.sanjay.laravel;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -14,7 +14,6 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.sanjay.laravel.network.ApplicationUtility;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -155,7 +154,7 @@ public class SplashActivity extends AppCompatActivity {
     class splash extends TimerTask {
         @Override
         public void run() {
-            Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+            Intent i = new Intent(SplashActivity.this, WelcomeActivity.class);
             finish();
             startActivity(i);
         }
