@@ -3,6 +3,7 @@ package com.sanjay.laravel;
 import android.app.Application;
 import android.content.Context;
 import com.facebook.stetho.Stetho;
+import com.sanjay.laravel.utils.ConnectivityReceiver;
 import com.snatik.storage.Storage;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 import io.realm.Realm;
@@ -15,10 +16,17 @@ public class MyApplication extends Application {
     public MyApplication() {
         instance = this;
     }
+
+    public static synchronized MyApplication getInstance() {
+        return instance;
+    }
     public static Context getContext() {
         return instance;
     }
 
+    public void setConnectivityListener(ConnectivityReceiver.ConnectivityReceiverListener listener) {
+        ConnectivityReceiver.connectivityReceiverListener = listener;
+    }
 
     @Override
     public void onCreate() {
