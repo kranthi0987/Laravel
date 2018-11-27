@@ -62,6 +62,20 @@
                 android:textColor="@color/input_register"
                 android:textColorHint="@color/input_register_hint" />
 
+            <EditText
+                android:id="@+id/user_number"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@color/input_register_bg"
+                android:hint="@string/phone_number"
+                android:inputType="phone"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="@color/input_register"
+                android:textColorHint="@color/input_register_hint" />
+
+
             <!-- Login Button -->
 
             <Button

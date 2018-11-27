@@ -1,7 +1,12 @@
 package com.sanjay.laravel.retroFit;
 
-import com.sanjay.laravel.models.*;
+import com.sanjay.laravel.models.LoginPassRequest;
+import com.sanjay.laravel.models.LoginResponse;
+import com.sanjay.laravel.models.LogoutSuccessResponse;
+import com.sanjay.laravel.models.UserSuccessResponse;
 import com.sanjay.laravel.models.products.ProductsResponse;
+import com.sanjay.laravel.models.registrationModel.RegisterRequest;
+import com.sanjay.laravel.models.registrationModel.RegisterSuccessResponse;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;

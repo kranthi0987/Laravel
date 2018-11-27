@@ -11,8 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
-import com.sanjay.laravel.models.RegisterRequest;
-import com.sanjay.laravel.models.RegisterSuccessResponse;
+import com.sanjay.laravel.models.registrationModel.RegisterRequest;
+import com.sanjay.laravel.models.registrationModel.RegisterSuccessResponse;
 import com.sanjay.laravel.retroFit.ApiClient;
 import com.sanjay.laravel.retroFit.ApiInterface;
 import com.sanjay.laravel.utils.SessionManager;
@@ -36,6 +36,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText inputFullName;
     private EditText inputEmail;
     private EditText inputPassword;
+    private EditText inputnumber;
     private ProgressDialog pDialog;
     private SessionManager session;
     String[] domain = null;
@@ -53,6 +54,7 @@ public class RegistrationActivity extends AppCompatActivity {
         inputFullName = findViewById(R.id.name);
         inputEmail = findViewById(R.id.email);
         inputPassword = findViewById(R.id.password);
+        inputnumber = findViewById(R.id.user_number);
         btnRegister = findViewById(R.id.btnRegister);
         btnLinkToLogin = findViewById(R.id.btnLinkToLoginScreen);
 
@@ -90,9 +92,10 @@ public class RegistrationActivity extends AppCompatActivity {
                 String name = inputFullName.getText().toString().trim();
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
+                String user_number = inputnumber.getText().toString().trim();
                 domain = email.split(Pattern.quote("@"));
-                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-                    Registercall(name, email, password);
+                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty() && !user_number.isEmpty()) {
+                    Registercall(name, email, password, user_number);
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "Please enter your details!", Toast.LENGTH_LONG)
@@ -114,7 +117,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     }
 
-    public void Registercall(String name, String email, String password) {
+    public void Registercall(String name, String email, String password, String number) {
 
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         final ProgressDialog progressDoalog;
@@ -125,10 +128,11 @@ public class RegistrationActivity extends AppCompatActivity {
         progressDoalog.show();
 
         RegisterRequest registerRequest = new RegisterRequest();
-        registerRequest.setName(name);
+        registerRequest.setUserName(name);
         registerRequest.setEmail(email);
         registerRequest.setPassword(password);
         registerRequest.setPasswordConfirmation(password);
+        registerRequest.setUserPhoneNumber(number);
 
 
         Observable<RegisterSuccessResponse> observable = apiInterface.REGISTER_SUCCESS_RESPONSE_OBSERVABLE(registerRequest)
