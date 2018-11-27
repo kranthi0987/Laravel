@@ -1,12 +1,14 @@
 package com.sanjay.laravel.retroFit;
 
 import com.sanjay.laravel.models.*;
+import com.sanjay.laravel.models.products.ProductsResponse;
 import io.reactivex.Observable;
-import okhttp3.RequestBody;
-import retrofit2.http.*;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public interface ApiInterface {
 
@@ -23,5 +25,7 @@ public interface ApiInterface {
     @GET("api/auth/logout")
     Observable<LogoutSuccessResponse> LOGOUT_SUCCESS_RESPONSE_OBSERVABLE(@Header("Authorization") String headers);
 
+    @GET("api/products")
+    Observable<List<ProductsResponse>> PRODUCTS_RESPONSE_OBSERVABLE();
 
 }

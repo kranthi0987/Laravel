@@ -10,6 +10,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,8 +20,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.sanjay.laravel.adapters.ProductDataAdapter;
 import com.sanjay.laravel.models.LogoutSuccessResponse;
 import com.sanjay.laravel.models.UserSuccessResponse;
+import com.sanjay.laravel.models.products.ProductsResponse;
 import com.sanjay.laravel.retroFit.ApiClient;
 import com.sanjay.laravel.retroFit.ApiInterface;
 import com.sanjay.laravel.utils.SessionManager;
@@ -29,6 +33,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.sanjay.laravel.MyApplication.getContext;
 
@@ -41,6 +48,12 @@ public class DashboardActivity extends AppCompatActivity
     public SessionManager session;
     Realm realm;
     String token = null;
+
+    private RecyclerView mRecyclerView;
+
+    private ProductDataAdapter mProductAdapter;
+
+    private ArrayList<ProductsResponse> mProductArraylist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +107,17 @@ public class DashboardActivity extends AppCompatActivity
                 logoutUser();
             }
         });
+        initRecyclerView();
+        loadproductlist();
     }
 
+    private void initRecyclerView() {
+
+        mRecyclerView = findViewById(R.id.product_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        mRecyclerView.setLayoutManager(layoutManager);
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -176,7 +198,6 @@ public class DashboardActivity extends AppCompatActivity
         progressDoalog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDoalog.show();
 
-//        String token = "Bearer " + session.getToken();
 
         Observable<LogoutSuccessResponse> observable = apiInterface.LOGOUT_SUCCESS_RESPONSE_OBSERVABLE(token)
                 .subscribeOn(Schedulers.newThread())
@@ -256,6 +277,56 @@ public class DashboardActivity extends AppCompatActivity
 
         });
 
+    }
+
+    private void loadproductlist() {
+        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        final ProgressDialog progressDoalog;
+        progressDoalog = new ProgressDialog(DashboardActivity.this);
+        progressDoalog.setMax(100);
+        progressDoalog.setMessage("Its loading....");
+        progressDoalog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDoalog.show();
+
+
+        Observable<List<ProductsResponse>> observable = apiInterface.PRODUCTS_RESPONSE_OBSERVABLE()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+        observable.subscribe(new Observer<List<ProductsResponse>>() {
+
+            @Override
+            public void onError(Throwable e) {
+                progressDoalog.hide();
+                Toast.makeText(getContext(), "error" + e, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onComplete() {
+                progressDoalog.hide();
+                Toast.makeText(getContext(), "user details retrieved", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(List<ProductsResponse> Listdata) {
+                handleResponse(Listdata);
+
+
+            }
+
+        });
+
+    }
+
+    private void handleResponse(List<ProductsResponse> productsResponseList) {
+
+        mProductArraylist = new ArrayList<>(productsResponseList);
+        mProductAdapter = new ProductDataAdapter(mProductArraylist);
+        mRecyclerView.setAdapter(mProductAdapter);
     }
 
 }
