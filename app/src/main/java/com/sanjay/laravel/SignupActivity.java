@@ -1,7 +1,6 @@
 package com.sanjay.laravel;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,14 +31,15 @@ public class SignupActivity extends AppCompatActivity {
         checkmail.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
+                assert finalJ != null;
                 if (finalJ.contains("gmail")) {
-                    PackageManager manager = getPackageManager();
-                    Intent i = manager.getLaunchIntentForPackage("com.google.android.gmail");
-                    i.addCategory(Intent.CATEGORY_LAUNCHER);
-                    startActivity(i);
+                    Intent mailClient = new Intent(Intent.ACTION_VIEW);
+                    mailClient.setClassName("com.google.android.gm", "com.google.android.gm.ConversationListActivity");
+                    startActivity(mailClient);
                 } else {
+                    String url = "www." + finalJ + ".com";
                     Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse("www." + finalJ));
+                    i.setData(Uri.parse(url));
                     startActivity(i);
                 }
                 finish();

@@ -4,9 +4,10 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.sanjay.laravel.AppConstants.BASE_URL;
+
 public class ApiClient {
-    public static final String BASE_URL = "http://192.168.2.121:8000/";
-    public static Retrofit retrofit = null;
+    private static Retrofit retrofit = null;
 
     public static Retrofit getApiClient() {
         if (retrofit == null) {

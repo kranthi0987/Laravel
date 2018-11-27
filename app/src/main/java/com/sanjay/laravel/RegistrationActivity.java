@@ -150,7 +150,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 progressDoalog.hide();
                 Intent i = new Intent(getApplicationContext(),
                         SignupActivity.class);
-                i.putExtra("domain", domain[0]);
+                i.putExtra("domain", domain[1]);
                 startActivity(i);
                 finish();
                 Toast.makeText(getContext(), "Completed", Toast.LENGTH_SHORT).show();

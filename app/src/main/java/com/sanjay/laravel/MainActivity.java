@@ -30,8 +30,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
             color = Color.RED;
         }
 
-        Snackbar snackbar = Snackbar
-                .make(findViewById(R.id.maintext), message, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.maintext), message, Snackbar.LENGTH_LONG);
 
         View sbView = snackbar.getView();
         TextView textView = sbView.findViewById(android.support.design.R.id.snackbar_text);
