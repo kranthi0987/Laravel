@@ -11,6 +11,9 @@ public class SessionManager {
     // Shared preferences file name
     private static final String PREF_NAME = "laravel";
     private static final String Token = "token";
+    private static final String User_name = "user_name";
+    private static final String User_Email = "user_email";
+    private static final String User_Avatar = "user_avatar";
     // Shared Preferences
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
@@ -60,4 +63,32 @@ public class SessionManager {
         editor.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTime);
         editor.commit();
     }
+
+    public String getName() {
+        return pref.getString(User_name, null);
+    }
+
+    public void setName(String Name) {
+        editor.putString(User_name, Name);
+        editor.commit();
+    }
+
+    public String getEmail() {
+        return pref.getString(User_Email, null);
+    }
+
+    public void setEmail(String Email) {
+        editor.putString(User_Email, Email);
+        editor.commit();
+    }
+
+    public String getAvatar() {
+        return pref.getString(User_Avatar, null);
+    }
+
+    public void setAvatar(String Avatar) {
+        editor.putString(User_Avatar, Avatar);
+        editor.commit();
+    }
+
 }

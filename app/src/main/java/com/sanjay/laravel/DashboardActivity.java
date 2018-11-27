@@ -16,10 +16,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.bumptech.glide.Glide;
 import com.sanjay.laravel.adapters.ProductDataAdapter;
 import com.sanjay.laravel.models.LogoutSuccessResponse;
 import com.sanjay.laravel.models.UserSuccessResponse;
@@ -44,7 +44,7 @@ public class DashboardActivity extends AppCompatActivity
     public static ApiInterface apiInterface;
     private TextView txtName;
     private TextView txtEmail;
-    private Button btnLogout;
+    //    private Button btnLogout;
     public SessionManager session;
     Realm realm;
     String token = null;
@@ -65,9 +65,9 @@ public class DashboardActivity extends AppCompatActivity
         Realm realm = Realm.getDefaultInstance();
 
 
-        txtName = findViewById(R.id.name);
-        txtEmail = findViewById(R.id.email);
-        btnLogout = findViewById(R.id.btnLogout);
+//        txtName = findViewById(R.id.name);
+//        txtEmail = findViewById(R.id.email);
+//        btnLogout = findViewById(R.id.btnLogout);
         // session manager
         session = new SessionManager(DashboardActivity.this);
         token = "Bearer " + session.getToken();
@@ -96,17 +96,19 @@ public class DashboardActivity extends AppCompatActivity
         ImageView nav_avatar = hView.findViewById(R.id.nav_avatar);
         TextView nav_user = hView.findViewById(R.id.nav_name);
         TextView nav_email = hView.findViewById(R.id.nav_email);
-
+        nav_user.setText(session.getName());
+        nav_email.setText(session.getEmail());
+        Glide.with(MyApplication.getContext()).load("http://192.168.2.121:8000" + session.getAvatar()).into(nav_avatar);
         navigationView.setNavigationItemSelectedListener(this);
 
         // Logout button click event
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                logoutUser();
-            }
-        });
+//        btnLogout.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                logoutUser();
+//            }
+//        });
         initRecyclerView();
         loadproductlist();
     }
@@ -118,6 +120,7 @@ public class DashboardActivity extends AppCompatActivity
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(layoutManager);
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -166,7 +169,7 @@ public class DashboardActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_logout) {
             logoutUser();
         }
 
@@ -269,8 +272,12 @@ public class DashboardActivity extends AppCompatActivity
                 String email = Listdata.getEmail();
                 String avatar = Listdata.getAvatarUrl();
                 // Displaying the user details on the screen
-                txtName.setText(name);
-                txtEmail.setText(email);
+//                txtName.setText(name);
+//                txtEmail.setText(email);
+                //Store the name and username in the share pref
+                session.setName(name);
+                session.setEmail(email);
+                session.setAvatar(avatar);
 
 
             }
