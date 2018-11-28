@@ -50,4 +50,6 @@
     <string name="productimages">productImages</string>
     <string name="logout">Logout</string>
     <string name="phone_number">phone number</string>
+    <string name="title_activity_reset_password">ResetPassword</string>
+    <string name="forget_password">forget password</string>
 </resources>

@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private Button btnLogin;
     private Button btnLinkToRegister;
+    private Button getBtnLinkToPasswordReset;
     private EditText inputEmail;
     private EditText inputPassword;
     private ProgressDialog pDialog;
@@ -48,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         inputPassword = findViewById(R.id.password);
         btnLogin = findViewById(R.id.btnLogin);
         btnLinkToRegister = findViewById(R.id.btnLinkToRegisterScreen);
+        getBtnLinkToPasswordReset = findViewById(R.id.btnLinkTopasswordrestScreen);
         remember_me = findViewById(R.id.remember_me);
 
 
@@ -97,7 +99,15 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+        getBtnLinkToPasswordReset.setOnClickListener(new View.OnClickListener() {
 
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),
+                        ResetPassword.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
     }
 
@@ -134,8 +144,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete() {
                 progressDoalog.hide();
-                Intent i = new Intent(getApplicationContext(),
-                        DashboardActivity.class);
+                Intent i = new Intent(getApplicationContext(), DashboardActivity.class);
                 startActivity(i);
                 finish();
                 Toast.makeText(getContext(), "Completed", Toast.LENGTH_SHORT).show();

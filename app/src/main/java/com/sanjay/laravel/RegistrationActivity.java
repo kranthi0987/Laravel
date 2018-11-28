@@ -148,8 +148,7 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onComplete() {
                 progressDoalog.hide();
-                Intent i = new Intent(getApplicationContext(),
-                        SignupActivity.class);
+                Intent i = new Intent(getApplicationContext(), SignupActivity.class);
                 i.putExtra("domain", domain[1]);
                 startActivity(i);
                 finish();
