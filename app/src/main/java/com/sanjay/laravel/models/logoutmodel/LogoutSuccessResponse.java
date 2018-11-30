@@ -1,9 +1,9 @@
-package com.sanjay.laravel.models;
+package com.sanjay.laravel.models.logoutmodel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SignupActivationFailedResponse {
+public class LogoutSuccessResponse {
 
     @SerializedName("message")
     @Expose

@@ -1,16 +1,13 @@
-package com.sanjay.laravel.models;
+package com.sanjay.laravel.models.forgetPasswordModel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LogoutSuccessResponse {
+public class ForgetPasswordResponse {
 
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("stats")
-    @Expose
-    private String stats;
 
     public String getMessage() {
         return message;
@@ -18,14 +15,6 @@ public class LogoutSuccessResponse {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public String getStats() {
-        return stats;
-    }
-
-    public void setStats(String stats) {
-        this.stats = stats;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.sanjay.laravel.models;
+package com.sanjay.laravel.models.userModel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -8,18 +8,30 @@ public class UserSuccessResponse {
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("name")
+    @SerializedName("user_id")
     @Expose
-    private String name;
+    private Integer userId;
+    @SerializedName("address_id")
+    @Expose
+    private Integer addressId;
+    @SerializedName("user_name")
+    @Expose
+    private String userName;
     @SerializedName("email")
     @Expose
     private String email;
-    @SerializedName("avatar")
+    @SerializedName("user_phone_number")
     @Expose
-    private String avatar;
+    private String userPhoneNumber;
+    @SerializedName("user_avatar")
+    @Expose
+    private String userAvatar;
     @SerializedName("active")
     @Expose
     private Integer active;
+    @SerializedName("user_other_details")
+    @Expose
+    private String userOtherDetails;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -41,12 +53,28 @@ public class UserSuccessResponse {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Integer addressId) {
+        this.addressId = addressId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {
@@ -57,12 +85,20 @@ public class UserSuccessResponse {
         this.email = email;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getUserPhoneNumber() {
+        return userPhoneNumber;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setUserPhoneNumber(String userPhoneNumber) {
+        this.userPhoneNumber = userPhoneNumber;
+    }
+
+    public String getUserAvatar() {
+        return userAvatar;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
     }
 
     public Integer getActive() {
@@ -71,6 +107,14 @@ public class UserSuccessResponse {
 
     public void setActive(Integer active) {
         this.active = active;
+    }
+
+    public String getUserOtherDetails() {
+        return userOtherDetails;
+    }
+
+    public void setUserOtherDetails(String userOtherDetails) {
+        this.userOtherDetails = userOtherDetails;
     }
 
     public String getCreatedAt() {

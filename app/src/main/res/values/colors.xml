@@ -16,6 +16,8 @@
     <color name="btn_login_bg">#eceef1</color>
     <color name="lbl_name">#333333</color>
     <color name="btn_logut_bg">#ff6861</color>
+    <color name="card_bg">#52d6d3</color>
+    <color name="product_not_available">#f16f6f</color>
 
     <color name="black_overlay">#66000000</color>
 

@@ -142,6 +142,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable e) {
+                progressDoalog.hide();
                 Toast.makeText(getContext(), "error" + e, Toast.LENGTH_SHORT).show();
             }
 

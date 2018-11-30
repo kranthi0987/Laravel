@@ -21,9 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.sanjay.laravel.adapters.ProductDataAdapter;
-import com.sanjay.laravel.models.LogoutSuccessResponse;
-import com.sanjay.laravel.models.UserSuccessResponse;
+import com.sanjay.laravel.models.logoutmodel.LogoutSuccessResponse;
 import com.sanjay.laravel.models.products.ProductsResponse;
+import com.sanjay.laravel.models.userModel.UserSuccessResponse;
 import com.sanjay.laravel.retroFit.ApiClient;
 import com.sanjay.laravel.retroFit.ApiInterface;
 import com.sanjay.laravel.utils.SessionManager;
@@ -98,7 +98,7 @@ public class DashboardActivity extends AppCompatActivity
         TextView nav_email = hView.findViewById(R.id.nav_email);
         nav_user.setText(session.getName());
         nav_email.setText(session.getEmail());
-        Glide.with(MyApplication.getContext()).load("http://192.168.2.121:8000" + session.getAvatar()).into(nav_avatar);
+        Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + session.getAvatar()).into(nav_avatar);
         navigationView.setNavigationItemSelectedListener(this);
 
         // Logout button click event
@@ -268,7 +268,7 @@ public class DashboardActivity extends AppCompatActivity
 
             @Override
             public void onNext(UserSuccessResponse Listdata) {
-                String name = Listdata.getName();
+                String name = Listdata.getUserName();
                 String email = Listdata.getEmail();
                 String avatar = Listdata.getAvatarUrl();
                 // Displaying the user details on the screen
@@ -332,7 +332,7 @@ public class DashboardActivity extends AppCompatActivity
     private void handleResponse(List<ProductsResponse> productsResponseList) {
 
         mProductArraylist = new ArrayList<>(productsResponseList);
-        mProductAdapter = new ProductDataAdapter(mProductArraylist);
+        mProductAdapter = new ProductDataAdapter(mProductArraylist, DashboardActivity.this);
         mRecyclerView.setAdapter(mProductAdapter);
     }
 

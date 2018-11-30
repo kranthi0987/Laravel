@@ -1,5 +1,6 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/product_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="5dp"
@@ -15,15 +16,20 @@
 
         <ImageView
             android:id="@+id/product_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/productimages" />
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/productimages"
+            android:src="@color/bg_screen1" />
+
         <TextView
             android:id="@+id/product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:text="sdjhasdjajda"
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -32,24 +38,39 @@
             android:id="@+id/product_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="company"
             android:textSize="12sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/product_description"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="description" />
 
-        <TextView
-            android:id="@+id/product_amount"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-        <TextView
-            android:id="@+id/product_available"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/product_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="amount" />
 
+            <TextView
+                android:id="@+id/product_available"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="available"
+                android:visibility="invisible" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

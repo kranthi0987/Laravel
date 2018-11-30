@@ -1,4 +1,4 @@
-package com.sanjay.laravel.models;
+package com.sanjay.laravel.models.loginModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

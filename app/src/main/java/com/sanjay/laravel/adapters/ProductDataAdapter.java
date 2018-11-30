@@ -2,6 +2,7 @@ package com.sanjay.laravel.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.sanjay.laravel.AppConstants;
 import com.sanjay.laravel.MyApplication;
 import com.sanjay.laravel.R;
 import com.sanjay.laravel.models.products.ProductsResponse;
@@ -17,10 +19,11 @@ import java.util.ArrayList;
 
 public class ProductDataAdapter extends RecyclerView.Adapter<ProductDataAdapter.ViewHolder> {
     private ArrayList<ProductsResponse> mProductsList;
-    private Context context;
+    private Context mcontext;
 
-    public ProductDataAdapter(ArrayList<ProductsResponse> productlist) {
+    public ProductDataAdapter(ArrayList<ProductsResponse> productlist, Context context) {
         mProductsList = productlist;
+        mcontext = context;
     }
 
     @NonNull
@@ -35,11 +38,16 @@ public class ProductDataAdapter extends RecyclerView.Adapter<ProductDataAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.productname.setText(mProductsList.get(position).getName());
         holder.productdescription.setText(mProductsList.get(position).getDescription());
-        holder.productamount.setText(mProductsList.get(position).getAmount().toString());
+        holder.productamount.setText(mProductsList.get(position).getAmount().toString() + "₹");
         holder.productcompany.setText(mProductsList.get(position).getCompany());
-        holder.productavailable.setText(mProductsList.get(position).getAvailable().toString());
+        if (mProductsList.get(position).getAvailable() == 1) {
+            holder.mCardView.setCardBackgroundColor(mcontext.getResources().getColor(R.color.card_bg));
+        } else {
+            holder.mCardView.setCardBackgroundColor(mcontext.getResources().getColor(R.color.product_not_available));
+        }
+//        holder.productavailable.setText(mProductsList.get(position).getAvailable().toString());
         String imageUrl = mProductsList.get(position).getProductimg();
-        Glide.with(MyApplication.getContext()).load("http://192.168.2.121:8000" + imageUrl).into(holder.productimg);
+        Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + imageUrl).into(holder.productimg);
 
     }
 
@@ -53,9 +61,11 @@ public class ProductDataAdapter extends RecyclerView.Adapter<ProductDataAdapter.
 
         private TextView productname, productcompany, productamount, productdescription, productavailable;
         private ImageView productimg;
+        private CardView mCardView;
 
         public ViewHolder(View view) {
             super(view);
+            mCardView = itemView.findViewById(R.id.product_card);
             productname = view.findViewById(R.id.product_name);
             productcompany = view.findViewById(R.id.product_company);
             productamount = view.findViewById(R.id.product_amount);
