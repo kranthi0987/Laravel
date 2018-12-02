@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.stetho.Stetho;
 import com.sanjay.laravel.utils.ConnectivityReceiver;
+import com.sanjay.laravel.utils.SessionManager;
 import com.snatik.storage.Storage;
 import com.squareup.leakcanary.LeakCanary;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
@@ -29,11 +30,13 @@ public class MyApplication extends Application {
         ConnectivityReceiver.connectivityReceiverListener = listener;
     }
 
+    public static SessionManager session;
     @Override
     public void onCreate() {
         super.onCreate();
         // init
         Storage storage = new Storage(getApplicationContext());
+        session = new SessionManager(this);
 
         Realm.init(this);
         RealmConfiguration mRealmConfiguration = new RealmConfiguration.Builder()

@@ -19,11 +19,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.bumptech.glide.Glide;
 import com.sanjay.laravel.adapters.ProductDataAdapter;
-import com.sanjay.laravel.models.logoutmodel.LogoutSuccessResponse;
 import com.sanjay.laravel.models.products.ProductsResponse;
-import com.sanjay.laravel.models.userModel.UserSuccessResponse;
 import com.sanjay.laravel.retroFit.ApiClient;
 import com.sanjay.laravel.retroFit.ApiInterface;
 import com.sanjay.laravel.utils.SessionManager;
@@ -38,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.sanjay.laravel.MyApplication.getContext;
+import static com.sanjay.laravel.utils.CommonUsedMethods.logoutUser;
 
 public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -55,13 +55,15 @@ public class DashboardActivity extends AppCompatActivity
 
     private ArrayList<ProductsResponse> mProductArraylist;
 
+    private FloatingSearchView mSearchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        mSearchView = findViewById(R.id.floating_search_view);
         Realm realm = Realm.getDefaultInstance();
 
 
@@ -71,7 +73,7 @@ public class DashboardActivity extends AppCompatActivity
         // session manager
         session = new SessionManager(DashboardActivity.this);
         token = "Bearer " + session.getToken();
-        viewusercall();
+//        viewusercall();
 //        if (!session.isLoggedIn()) {
 //            logoutUser();
 //        }
@@ -90,7 +92,7 @@ public class DashboardActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
+        mSearchView.attachNavigationDrawerToMenuButton(drawer);
         NavigationView navigationView = findViewById(R.id.nav_view);
         View hView = navigationView.getHeaderView(0);
         ImageView nav_avatar = hView.findViewById(R.id.nav_avatar);
@@ -101,6 +103,16 @@ public class DashboardActivity extends AppCompatActivity
         Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + session.getAvatar()).into(nav_avatar);
         navigationView.setNavigationItemSelectedListener(this);
 
+        mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+            @Override
+            public void onSearchTextChanged(String oldQuery, final String newQuery) {
+                Toast.makeText(getApplicationContext(), "" + oldQuery + "" + newQuery, Toast.LENGTH_SHORT).show();
+                //get suggestions based on newQuery
+
+                //pass them on to the search view
+//                mSearchView.swapSuggestions();
+            }
+        });
         // Logout button click event
 //        btnLogout.setOnClickListener(new View.OnClickListener() {
 //
@@ -119,6 +131,10 @@ public class DashboardActivity extends AppCompatActivity
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(layoutManager);
+    }
+
+    private void initviews() {
+
     }
 
     @Override
@@ -161,10 +177,16 @@ public class DashboardActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
+        } else if (id == R.id.nav_maps) {
+            Intent i = new Intent(getApplicationContext(),
+                    MapActivity.class);
+            startActivity(i);
+            finish();
+        } else if (id == R.id.nav_profile) {
+            Intent i = new Intent(getApplicationContext(),
+                    ProfileActivity.class);
+            startActivity(i);
+            finish();
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
@@ -178,113 +200,10 @@ public class DashboardActivity extends AppCompatActivity
         return true;
     }
 
-    private void logoutUser() {
-        session.setLogin(false);
-
-//        db.deleteUsers();
-
-        // Launching the login activity
-        logoutcall();
-//        RealmResults<LoginResponse> realmResults = realm.where(LoginResponse.class).equalTo("access_token", accesstoken).findAll();
-//        realmResults.deleteAllFromRealm();
-        Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    public void logoutcall() {
-        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        final ProgressDialog progressDoalog;
-        progressDoalog = new ProgressDialog(DashboardActivity.this);
-        progressDoalog.setMax(100);
-        progressDoalog.setMessage("Its loading....");
-        progressDoalog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDoalog.show();
 
 
-        Observable<LogoutSuccessResponse> observable = apiInterface.LOGOUT_SUCCESS_RESPONSE_OBSERVABLE(token)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread());
-        observable.subscribe(new Observer<LogoutSuccessResponse>() {
-
-            @Override
-            public void onError(Throwable e) {
-                progressDoalog.hide();
-                Toast.makeText(getContext(), "error" + e, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onComplete() {
-                progressDoalog.hide();
-                Toast.makeText(getContext(), "Successfully logout", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(LogoutSuccessResponse Listdata) {
 
 
-            }
-
-        });
-
-    }
-
-    public void viewusercall() {
-        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        final ProgressDialog progressDoalog;
-        progressDoalog = new ProgressDialog(DashboardActivity.this);
-        progressDoalog.setMax(100);
-        progressDoalog.setMessage("Its loading....");
-        progressDoalog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDoalog.show();
-
-
-        Observable<UserSuccessResponse> observable = apiInterface.USER_SUCCESS_RESPONSE_OBSERVABLE(token)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread());
-        observable.subscribe(new Observer<UserSuccessResponse>() {
-
-            @Override
-            public void onError(Throwable e) {
-                progressDoalog.hide();
-                Toast.makeText(getContext(), "error" + e, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onComplete() {
-                progressDoalog.hide();
-                Toast.makeText(getContext(), "user details retrieved", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(UserSuccessResponse Listdata) {
-                String name = Listdata.getUserName();
-                String email = Listdata.getEmail();
-                String avatar = Listdata.getAvatarUrl();
-                // Displaying the user details on the screen
-//                txtName.setText(name);
-//                txtEmail.setText(email);
-                //Store the name and username in the share pref
-                session.setName(name);
-                session.setEmail(email);
-                session.setAvatar(avatar);
-
-
-            }
-
-        });
-
-    }
 
     private void loadproductlist() {
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);

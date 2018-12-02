@@ -52,4 +52,7 @@
     <string name="phone_number">phone number</string>
     <string name="title_activity_reset_password">ResetPassword</string>
     <string name="forget_password">forget password</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

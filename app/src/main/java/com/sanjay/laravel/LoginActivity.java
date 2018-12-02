@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.sanjay.laravel.models.loginModel.LoginPassRequest;
 import com.sanjay.laravel.models.loginModel.LoginResponse;
+import com.sanjay.laravel.models.userModel.UserSuccessResponse;
 import com.sanjay.laravel.retroFit.ApiClient;
 import com.sanjay.laravel.retroFit.ApiInterface;
 import com.sanjay.laravel.utils.SessionManager;
@@ -144,6 +145,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete() {
                 progressDoalog.hide();
+                viewusercall();
                 Intent i = new Intent(getApplicationContext(), DashboardActivity.class);
                 startActivity(i);
                 finish();
@@ -164,4 +166,47 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    public void viewusercall() {
+        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+
+
+        Observable<UserSuccessResponse> observable = apiInterface.USER_SUCCESS_RESPONSE_OBSERVABLE(session.getToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+        observable.subscribe(new Observer<UserSuccessResponse>() {
+
+            @Override
+            public void onError(Throwable e) {
+//                Toast.makeText(getContext(), "error" + e, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onComplete() {
+//                Toast.makeText(getContext(), "user details retrieved", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(UserSuccessResponse Listdata) {
+                String name = Listdata.getUserName();
+                String email = Listdata.getEmail();
+                String avatar = Listdata.getAvatarUrl();
+                // Displaying the user details on the screen
+//                txtName.setText(name);
+//                txtEmail.setText(email);
+                //Store the name and username in the share pref
+                session.setName(name);
+                session.setEmail(email);
+                session.setAvatar(avatar);
+
+
+            }
+
+        });
+
+    }
 }
