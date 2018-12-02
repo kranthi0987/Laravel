@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MapActivity">
+    tools:context=".TrackingActivity">
 
 
-    <include layout="@layout/content_map" />
+    <include layout="@layout/content_tracking" />
 
 
 </android.support.design.widget.CoordinatorLayout>

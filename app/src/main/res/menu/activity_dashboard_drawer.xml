@@ -5,9 +5,9 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_tracking"
+            android:icon="@drawable/mapmarker"
+            android:title="Tracking" />
         <item
             android:id="@+id/nav_maps"
             android:icon="@drawable/googlemaps"
