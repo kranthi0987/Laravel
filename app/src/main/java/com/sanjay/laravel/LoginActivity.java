@@ -163,6 +163,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onNext(LoginResponse Listdata) {
                 session.setToken(Listdata.getAccessToken());
+                session.setToken_type(Listdata.getTokenType());
             }
 
         });
@@ -173,7 +174,7 @@ public class LoginActivity extends AppCompatActivity {
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
 
-        Observable<UserSuccessResponse> observable = apiInterface.USER_SUCCESS_RESPONSE_OBSERVABLE("Bearer " + session.getToken())
+        Observable<UserSuccessResponse> observable = apiInterface.USER_SUCCESS_RESPONSE_OBSERVABLE(session.getToken_type() + " " + session.getToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
         observable.subscribe(new Observer<UserSuccessResponse>() {

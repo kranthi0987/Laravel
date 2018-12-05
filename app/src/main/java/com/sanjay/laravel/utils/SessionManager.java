@@ -14,6 +14,7 @@ public class SessionManager {
     private static final String User_name = "user_name";
     private static final String User_Email = "user_email";
     private static final String User_Avatar = "user_avatar";
+    private static final String Token_type = "Token_type";
     // Shared Preferences
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
@@ -91,4 +92,12 @@ public class SessionManager {
         editor.commit();
     }
 
+    public String getToken_type() {
+        return pref.getString(Token_type, null);
+    }
+
+    public void setToken_type(String tokentype) {
+        editor.putString(Token_type, tokentype);
+        editor.commit();
+    }
 }

@@ -78,7 +78,7 @@ public class TrackingActivity extends AppCompatActivity
         TextView nav_email = hView.findViewById(R.id.nav_email);
         nav_user.setText(session.getName());
         nav_email.setText(session.getEmail());
-        Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + "/" + session.getAvatar()).into(nav_avatar);
+        Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + session.getAvatar() + "avatar.png").into(nav_avatar);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -214,7 +214,9 @@ public class TrackingActivity extends AppCompatActivity
             URL url = new URL(strUrl);
 
             urlConnection = (HttpURLConnection) url.openConnection();
-
+            urlConnection.setReadTimeout(15000 /* milliseconds */);
+            urlConnection.setConnectTimeout(15000 /* milliseconds */);
+            urlConnection.setDoInput(true);
             urlConnection.connect();
 
             iStream = urlConnection.getInputStream();
