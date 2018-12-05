@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.sanjay.laravel.models.loginModel.LoginPassRequest;
 import com.sanjay.laravel.models.loginModel.LoginResponse;
 import com.sanjay.laravel.models.userModel.UserSuccessResponse;
@@ -138,18 +140,19 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable e) {
-                progressDoalog.hide();
-                Toast.makeText(getContext(), "error" + e, Toast.LENGTH_SHORT).show();
+                MaterialStyledDialog dialog = new MaterialStyledDialog.Builder(LoginActivity.this)
+                        .setTitle("Error!")
+                        .setDescription(e.toString())
+                        .build();
+                dialog.show();
+//                progressDoalog.hide();
+//                Toast.makeText(getContext(), "error" + e, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onComplete() {
                 progressDoalog.hide();
                 viewusercall();
-                Intent i = new Intent(getApplicationContext(), DashboardActivity.class);
-                startActivity(i);
-                finish();
-                Toast.makeText(getContext(), "Completed", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -170,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
 
-        Observable<UserSuccessResponse> observable = apiInterface.USER_SUCCESS_RESPONSE_OBSERVABLE(session.getToken())
+        Observable<UserSuccessResponse> observable = apiInterface.USER_SUCCESS_RESPONSE_OBSERVABLE("Bearer " + session.getToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
         observable.subscribe(new Observer<UserSuccessResponse>() {
@@ -178,11 +181,23 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onError(Throwable e) {
 //                Toast.makeText(getContext(), "error" + e, Toast.LENGTH_SHORT).show();
+                Log.i("login", "onError: " + e);
+                MaterialStyledDialog dialog = new MaterialStyledDialog.Builder(LoginActivity.this)
+                        .setTitle("Error!")
+                        .setDescription(e.toString())
+                        .build();
+                dialog.show();
             }
 
             @Override
             public void onComplete() {
 //                Toast.makeText(getContext(), "user details retrieved", Toast.LENGTH_SHORT).show();
+
+
+                Intent i = new Intent(getApplicationContext(), DashboardActivity.class);
+                startActivity(i);
+                finish();
+                Toast.makeText(getContext(), "Completed", Toast.LENGTH_SHORT).show();
             }
 
             @Override

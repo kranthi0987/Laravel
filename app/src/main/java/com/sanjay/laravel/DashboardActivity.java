@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.bumptech.glide.Glide;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.sanjay.laravel.adapters.ProductDataAdapter;
 import com.sanjay.laravel.models.products.ProductsResponse;
 import com.sanjay.laravel.retroFit.ApiClient;
@@ -100,7 +101,7 @@ public class DashboardActivity extends AppCompatActivity
         TextView nav_email = hView.findViewById(R.id.nav_email);
         nav_user.setText(session.getName());
         nav_email.setText(session.getEmail());
-        Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + session.getAvatar()).into(nav_avatar);
+        Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + "/" + session.getAvatar()).into(nav_avatar);
         navigationView.setNavigationItemSelectedListener(this);
 
         mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
@@ -226,12 +227,22 @@ public class DashboardActivity extends AppCompatActivity
             @Override
             public void onError(Throwable e) {
                 progressDoalog.hide();
+                MaterialStyledDialog dialog = new MaterialStyledDialog.Builder(DashboardActivity.this)
+                        .setTitle("Error!")
+                        .setDescription(e.toString())
+                        .build();
+                dialog.show();
                 Toast.makeText(getContext(), "error" + e, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onComplete() {
                 progressDoalog.hide();
+                MaterialStyledDialog dialog = new MaterialStyledDialog.Builder(DashboardActivity.this)
+                        .setTitle("Error!")
+                        .setDescription("user deatils retrived")
+                        .build();
+                dialog.show();
                 Toast.makeText(getContext(), "user details retrieved", Toast.LENGTH_SHORT).show();
             }
 

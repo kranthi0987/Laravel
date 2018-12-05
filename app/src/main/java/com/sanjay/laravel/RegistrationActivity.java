@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.sanjay.laravel.models.registrationModel.RegisterRequest;
 import com.sanjay.laravel.models.registrationModel.RegisterSuccessResponse;
 import com.sanjay.laravel.retroFit.ApiClient;
@@ -59,7 +60,7 @@ public class RegistrationActivity extends AppCompatActivity {
         btnLinkToLogin = findViewById(R.id.btnLinkToLoginScreen);
 
 //        //adding validation to edittexts
-//        awesomeValidation.addValidation(this, R.id.editTextName, "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$", R.string.nameerror);
+        //    awesomeValidation.addValidation(this, R.id.editTextName, "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$", R.string.nameerror);
 //        awesomeValidation.addValidation(this, R.id.editTextEmail, Patterns.EMAIL_ADDRESS, R.string.nameerror);
 //        awesomeValidation.addValidation(this, R.id.editTextMobile, "^[2-9]{2}[0-9]{8}$", R.string.nameerror);
 //        awesomeValidation.addValidation(this, R.id.editTextDob, "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$", R.string.nameerror);
@@ -143,6 +144,11 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onError(Throwable e) {
                 progressDoalog.hide();
+                MaterialStyledDialog dialog = new MaterialStyledDialog.Builder(RegistrationActivity.this)
+                        .setTitle("Error!")
+                        .setDescription(e.toString())
+                        .build();
+                dialog.show();
                 Toast.makeText(getContext(), "error" + e, Toast.LENGTH_SHORT).show();
             }
 

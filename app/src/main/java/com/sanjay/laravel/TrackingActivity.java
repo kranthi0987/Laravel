@@ -78,7 +78,7 @@ public class TrackingActivity extends AppCompatActivity
         TextView nav_email = hView.findViewById(R.id.nav_email);
         nav_user.setText(session.getName());
         nav_email.setText(session.getEmail());
-        Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + session.getAvatar()).into(nav_avatar);
+        Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + "/" + session.getAvatar()).into(nav_avatar);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -129,12 +129,12 @@ public class TrackingActivity extends AppCompatActivity
             Intent i = new Intent(getApplicationContext(),
                     MapActivity.class);
             startActivity(i);
-            finish();
+
         } else if (id == R.id.nav_profile) {
             Intent i = new Intent(getApplicationContext(),
                     ProfileActivity.class);
             startActivity(i);
-            finish();
+
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
