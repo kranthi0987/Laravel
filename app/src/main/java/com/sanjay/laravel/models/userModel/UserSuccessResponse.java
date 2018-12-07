@@ -1,9 +1,10 @@
 package com.sanjay.laravel.models.userModel;
 
+import android.databinding.BaseObservable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserSuccessResponse {
+public class UserSuccessResponse extends BaseObservable {
 
     @SerializedName("id")
     @Expose
@@ -83,6 +84,7 @@ public class UserSuccessResponse {
 
     public void setEmail(String email) {
         this.email = email;
+
     }
 
     public String getUserPhoneNumber() {

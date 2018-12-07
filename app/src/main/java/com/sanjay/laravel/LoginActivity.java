@@ -185,8 +185,14 @@ public class LoginActivity extends AppCompatActivity {
                 Log.i("login", "onError: " + e);
                 MaterialStyledDialog dialog = new MaterialStyledDialog.Builder(LoginActivity.this)
                         .setTitle("Error!")
+                        .setIcon(R.drawable.error)
+                        .withIconAnimation(true)
+                        .withDialogAnimation(true)
+                        .withDarkerOverlay(true)
+                        .setHeaderColor(R.color.background)
                         .setDescription(e.toString())
                         .build();
+
                 dialog.show();
             }
 

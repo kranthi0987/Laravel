@@ -62,6 +62,7 @@
             app:floatingSearch_showSearchKey="false"
             app:floatingSearch_suggestionsListAnimDuration="250" />
 
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/product_recycler_view"
             android:layout_width="match_parent"
@@ -74,6 +75,7 @@
             android:layout_marginLeft="0dp"
             android:layout_marginTop="-500dp"
             android:layout_marginBottom="0dp" />
+
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

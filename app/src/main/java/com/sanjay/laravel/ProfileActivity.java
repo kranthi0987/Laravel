@@ -1,6 +1,7 @@
 package com.sanjay.laravel;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.sanjay.laravel.databinding.ContentProfileBinding;
 
 import static com.sanjay.laravel.MyApplication.session;
 import static com.sanjay.laravel.utils.CommonUsedMethods.logoutUser;
@@ -23,12 +25,17 @@ import static com.sanjay.laravel.utils.CommonUsedMethods.logoutUser;
 public class ProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+//        setContentView(R.layout.activity_profile);
+        ContentProfileBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
+        binding.email.setText("dshjasdfja");
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

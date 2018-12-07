@@ -58,6 +58,7 @@ public class DashboardActivity extends AppCompatActivity
 
     private FloatingSearchView mSearchView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +127,17 @@ public class DashboardActivity extends AppCompatActivity
         loadproductlist();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    public void onPause() {
+
+        super.onPause();
+    }
     private void initRecyclerView() {
 
         mRecyclerView = findViewById(R.id.product_recycler_view);
@@ -238,12 +250,14 @@ public class DashboardActivity extends AppCompatActivity
             @Override
             public void onComplete() {
                 progressDoalog.hide();
-                MaterialStyledDialog dialog = new MaterialStyledDialog.Builder(DashboardActivity.this)
-                        .setTitle("Error!")
-                        .setDescription("user deatils retrived")
-                        .build();
-                dialog.show();
-                Toast.makeText(getContext(), "user details retrieved", Toast.LENGTH_SHORT).show();
+
+
+//                MaterialStyledDialog dialog = new MaterialStyledDialog.Builder(DashboardActivity.this)
+//                        .setTitle("Error!")
+//                        .setDescription("user deatils retrived")
+//                        .build();
+//                dialog.show();
+//                Toast.makeText(getContext(), "user details retrieved", Toast.LENGTH_SHORT).show();
             }
 
             @Override
