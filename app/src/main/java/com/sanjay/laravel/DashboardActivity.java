@@ -108,6 +108,8 @@ public class DashboardActivity extends AppCompatActivity
         mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, final String newQuery) {
+                mProductAdapter.getFilter().filter(newQuery);
+
                 Toast.makeText(getApplicationContext(), "" + oldQuery + "" + newQuery, Toast.LENGTH_SHORT).show();
                 //get suggestions based on newQuery
 
@@ -138,6 +140,7 @@ public class DashboardActivity extends AppCompatActivity
 
         super.onPause();
     }
+
     private void initRecyclerView() {
 
         mRecyclerView = findViewById(R.id.product_recycler_view);
@@ -215,10 +218,6 @@ public class DashboardActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
-
-
 
 
     private void loadproductlist() {

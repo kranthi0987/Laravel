@@ -17,7 +17,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
-import com.sanjay.laravel.databinding.ContentProfileBinding;
+import com.sanjay.laravel.databinding.ActivityProfileBinding;
+import com.sanjay.laravel.models.userModel.UserSuccessResponse;
 
 import static com.sanjay.laravel.MyApplication.session;
 import static com.sanjay.laravel.utils.CommonUsedMethods.logoutUser;
@@ -30,8 +31,11 @@ public class ProfileActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_profile);
-        ContentProfileBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
-        binding.email.setText("dshjasdfja");
+        ActivityProfileBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
+        UserSuccessResponse model = new UserSuccessResponse();
+        model.setEmail("email.com");
+        binding.setUser(model);
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

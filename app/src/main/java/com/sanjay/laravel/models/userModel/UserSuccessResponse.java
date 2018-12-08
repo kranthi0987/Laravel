@@ -1,6 +1,7 @@
 package com.sanjay.laravel.models.userModel;
 
 import android.databinding.BaseObservable;
+import android.databinding.ObservableField;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -45,6 +46,22 @@ public class UserSuccessResponse extends BaseObservable {
     @SerializedName("avatar_url")
     @Expose
     private String avatarUrl;
+
+    public UserSuccessResponse() {
+        this.id = id;
+        this.userId = userId;
+        this.addressId = addressId;
+        this.userName = userName;
+        this.email = email;
+        this.userPhoneNumber = userPhoneNumber;
+        this.userAvatar = userAvatar;
+        this.active = active;
+        this.userOtherDetails = userOtherDetails;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
+        this.avatarUrl = avatarUrl;
+    }
 
     public Integer getId() {
         return id;
@@ -150,5 +167,13 @@ public class UserSuccessResponse extends BaseObservable {
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
+
+
+    public class UserSuccessResponseModel {
+
+        public ObservableField<String> email = new ObservableField<>();
+
+    }
+
 
 }

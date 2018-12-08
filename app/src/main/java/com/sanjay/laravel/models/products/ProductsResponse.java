@@ -15,6 +15,9 @@ public class ProductsResponse {
     @SerializedName("company")
     @Expose
     private String company;
+    @SerializedName("category")
+    @Expose
+    private String category;
     @SerializedName("description")
     @Expose
     private String description;
@@ -56,6 +59,14 @@ public class ProductsResponse {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getDescription() {
