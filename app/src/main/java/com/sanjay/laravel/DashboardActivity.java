@@ -108,8 +108,8 @@ public class DashboardActivity extends AppCompatActivity
         mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, final String newQuery) {
-                mProductAdapter.getFilter().filter(newQuery);
 
+                filter(newQuery);
                 Toast.makeText(getApplicationContext(), "" + oldQuery + "" + newQuery, Toast.LENGTH_SHORT).show();
                 //get suggestions based on newQuery
 
@@ -282,4 +282,20 @@ public class DashboardActivity extends AppCompatActivity
         mRecyclerView.setAdapter(mProductAdapter);
     }
 
+    private void filter(String text) {
+        //new array list that will hold the filtered data
+        ArrayList<ProductsResponse> filterdNames = new ArrayList<>();
+
+        //looping through existing elements
+        for (ProductsResponse s : filterdNames) {
+            //if the existing elements contains the search input
+            if (s.getName().contains(text.toLowerCase())) {
+                //adding the element to filtered list
+                filterdNames.add(s);
+            }
+        }
+
+        //calling a method of the adapter class and passing the filtered list
+        mProductAdapter.filterList(filterdNames);
+    }
 }

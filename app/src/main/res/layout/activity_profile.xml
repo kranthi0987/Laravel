@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <import type="com.sanjay.laravel.utils.BindingUtils" />
         <variable
             name="user"
             type="com.sanjay.laravel.models.userModel.UserSuccessResponse" />
@@ -20,7 +22,8 @@
         <include
             layout="@layout/app_bar_profile"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            bind:user="@{user}" />
 
         <android.support.design.widget.NavigationView
             android:id="@+id/nav_view"

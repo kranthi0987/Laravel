@@ -1,7 +1,12 @@
 package com.sanjay.laravel.models.userModel;
 
 import android.databinding.BaseObservable;
-import android.databinding.ObservableField;
+import android.databinding.Bindable;
+import android.databinding.BindingAdapter;
+import android.widget.ImageView;
+import com.android.databinding.library.baseAdapters.BR;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -47,21 +52,6 @@ public class UserSuccessResponse extends BaseObservable {
     @Expose
     private String avatarUrl;
 
-    public UserSuccessResponse() {
-        this.id = id;
-        this.userId = userId;
-        this.addressId = addressId;
-        this.userName = userName;
-        this.email = email;
-        this.userPhoneNumber = userPhoneNumber;
-        this.userAvatar = userAvatar;
-        this.active = active;
-        this.userOtherDetails = userOtherDetails;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.deletedAt = deletedAt;
-        this.avatarUrl = avatarUrl;
-    }
 
     public Integer getId() {
         return id;
@@ -79,41 +69,53 @@ public class UserSuccessResponse extends BaseObservable {
         this.userId = userId;
     }
 
-    public Integer getAddressId() {
-        return addressId;
+    @BindingAdapter({"android:profileImage"})
+    public static void loadImage(ImageView view, String imageUrl) {
+        Glide.with(view.getContext())
+                .load(imageUrl)
+                .apply(RequestOptions.circleCropTransform())
+                .into(view);
+        // If you consider Picasso, follow the below
+        // Picasso.with(view.getContext()).load(imageUrl).placeholder(R.drawable.placeholder).into(view);
     }
 
     public void setAddressId(Integer addressId) {
         this.addressId = addressId;
     }
 
+    @Bindable
+    public Integer getAddressId() {
+        return addressId;
+    }
+
+    @Bindable
     public String getUserName() {
         return userName;
     }
 
     public void setUserName(String userName) {
         this.userName = userName;
+        notifyPropertyChanged(BR.userName);
     }
 
+    @Bindable
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-
+        notifyPropertyChanged(BR.email);
     }
 
+    @Bindable
     public String getUserPhoneNumber() {
         return userPhoneNumber;
     }
 
     public void setUserPhoneNumber(String userPhoneNumber) {
         this.userPhoneNumber = userPhoneNumber;
-    }
-
-    public String getUserAvatar() {
-        return userAvatar;
+        notifyPropertyChanged(BR.userPhoneNumber);
     }
 
     public void setUserAvatar(String userAvatar) {
@@ -128,8 +130,9 @@ public class UserSuccessResponse extends BaseObservable {
         this.active = active;
     }
 
-    public String getUserOtherDetails() {
-        return userOtherDetails;
+    @Bindable
+    public String getUserAvatar() {
+        return userAvatar;
     }
 
     public void setUserOtherDetails(String userOtherDetails) {
@@ -160,20 +163,18 @@ public class UserSuccessResponse extends BaseObservable {
         this.deletedAt = deletedAt;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
+    @Bindable
+    public String getUserOtherDetails() {
+        return userOtherDetails;
     }
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
 
-
-    public class UserSuccessResponseModel {
-
-        public ObservableField<String> email = new ObservableField<>();
-
+    @Bindable
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
-
 
 }

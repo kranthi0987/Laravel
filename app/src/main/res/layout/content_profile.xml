@@ -6,6 +6,7 @@
 
     <data>
 
+        <import type="com.sanjay.laravel.utils.BindingUtils" />
         <variable
             name="user"
             type="com.sanjay.laravel.models.userModel.UserSuccessResponse" />
@@ -35,6 +36,14 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp">
 
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/fab_margin"
+                    android:padding="10dp"
+                    android:profileImage="@{BindingUtils.avatar(user.avatarUrl)}" />
+
                 <EditText
                     android:id="@+id/email"
                     android:layout_width="fill_parent"
@@ -49,14 +58,58 @@
                     android:textColor="@color/input_login"
                     android:textColorHint="@color/input_login_hint" />
 
+                <!--<EditText-->
+                <!--android:id="@+id/addressid"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--android:background="@color/white"-->
+                <!--android:hint="AddressId"-->
+                <!--android:padding="10dp"-->
+                <!--android:singleLine="true"-->
+                <!--android:text="@{user.addressId}"-->
+                />
+
+                <EditText
+                    android:id="@+id/userphonenumber"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:hint="User Mobile number"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:text="@{user.userPhoneNumber}" />
+
+                <EditText
+                    android:id="@+id/otherdeatils"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:hint="User Other Details"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:text="@{user.userOtherDetails}" />
+
+                <EditText
+                    android:id="@+id/username"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:hint="username"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:text="@{user.userName}" />
 
                 <Button
-                    android:id="@+id/btnLogin"
+                    android:id="@+id/btnprofileupdate"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dip"
                     android:background="@color/btn_login_bg"
-                    android:text="@string/btn_login"
+                    android:text="UPDATE"
                     android:textColor="@color/btn_login" />
 
             </LinearLayout>

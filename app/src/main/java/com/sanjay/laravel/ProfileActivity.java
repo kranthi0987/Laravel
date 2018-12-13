@@ -1,5 +1,6 @@
 package com.sanjay.laravel;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -11,30 +12,37 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.sanjay.laravel.databinding.ActivityProfileBinding;
 import com.sanjay.laravel.models.userModel.UserSuccessResponse;
+import com.sanjay.laravel.retroFit.ApiClient;
+import com.sanjay.laravel.retroFit.ApiInterface;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.sanjay.laravel.MyApplication.session;
 import static com.sanjay.laravel.utils.CommonUsedMethods.logoutUser;
 
 public class ProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    public static ApiInterface apiInterface;
+    private ActivityProfileBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_profile);
-        ActivityProfileBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
-        UserSuccessResponse model = new UserSuccessResponse();
-        model.setEmail("email.com");
-        binding.setUser(model);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -64,7 +72,7 @@ public class ProfileActivity extends AppCompatActivity
         nav_email.setText(session.getEmail());
         Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + session.getAvatar() + "avatar.png").into(nav_avatar);
         navigationView.setNavigationItemSelectedListener(this);
-
+        renderProfile();
     }
 
     @Override
@@ -134,4 +142,66 @@ public class ProfileActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Renders user profile data
+     */
+    private void renderProfile() {
+        UserSuccessResponse model = new UserSuccessResponse();
+        final ProgressDialog progressDoalog;
+        progressDoalog = new ProgressDialog(ProfileActivity.this);
+        progressDoalog.setMax(100);
+        progressDoalog.setMessage("Its loading....");
+        progressDoalog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDoalog.show();
+        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        Observable<UserSuccessResponse> observable = apiInterface.USER_SUCCESS_RESPONSE_OBSERVABLE(session.getToken_type() + " " + session.getToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+        observable.subscribe(new Observer<UserSuccessResponse>() {
+
+            @Override
+            public void onError(Throwable e) {
+//                Toast.makeText(getContext(), "error" + e, Toast.LENGTH_SHORT).show();
+                Log.i("login", "onError: " + e);
+                MaterialStyledDialog dialog = new MaterialStyledDialog.Builder(ProfileActivity.this)
+                        .setTitle("Error!")
+                        .setIcon(R.drawable.error)
+                        .withIconAnimation(true)
+                        .withDialogAnimation(true)
+                        .withDarkerOverlay(true)
+                        .setHeaderColor(R.color.background)
+                        .setDescription(e.toString())
+                        .build();
+
+                dialog.show();
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(UserSuccessResponse Listdata) {
+                progressDoalog.hide();
+                model.setEmail(Listdata.getEmail());
+                model.setUserName(Listdata.getUserName());
+                model.setAvatarUrl(Listdata.getAvatarUrl());
+                model.setUserAvatar(Listdata.getUserAvatar());
+                model.setUserPhoneNumber(Listdata.getUserPhoneNumber());
+                model.setUserOtherDetails(Listdata.getUserOtherDetails());
+//                model.setAddressId(Listdata.getAddressId());
+                binding.setUser(model);
+            }
+
+        });
+
+    }
 }
+
+

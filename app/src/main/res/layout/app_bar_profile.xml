@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <import type="com.sanjay.laravel.utils.BindingUtils" />
         <variable
             name="user"
             type="com.sanjay.laravel.models.userModel.UserSuccessResponse" />
@@ -29,7 +31,9 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/content_profile" />
+        <include
+            layout="@layout/content_profile"
+            bind:user="@{user}" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"

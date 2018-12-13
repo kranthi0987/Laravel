@@ -7,7 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.sanjay.laravel.AppConstants;
 import com.sanjay.laravel.MyApplication;
@@ -16,11 +19,10 @@ import com.sanjay.laravel.models.products.ProductsResponse;
 
 import java.util.ArrayList;
 
-public class ProductDataAdapter extends RecyclerView.Adapter<ProductDataAdapter.ViewHolder> implements Filterable {
+public class ProductDataAdapter extends RecyclerView.Adapter<ProductDataAdapter.ViewHolder> {
     private ArrayList<ProductsResponse> mProductsList;
     private Context mcontext;
-    private ArrayList<ProductsResponse> mfilterproductList;
-    private ArrayList<ProductsResponse> productfilteredresponse;
+
 
     public ProductDataAdapter(ArrayList<ProductsResponse> productlist, Context context) {
         mProductsList = productlist;
@@ -65,45 +67,6 @@ public class ProductDataAdapter extends RecyclerView.Adapter<ProductDataAdapter.
         return mProductsList.size();
     }
 
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                String charString = charSequence.toString();
-                if (charString.isEmpty()) {
-                    productfilteredresponse = mfilterproductList;
-                } else {
-                    ArrayList<ProductsResponse> filteredList = new ArrayList<>();
-                    for (ProductsResponse row : mfilterproductList) {
-
-                        // name match condition. this might differ depending on your requirement
-                        // here we are looking for name or phone number match
-                        if (row.getName().toLowerCase().contains(charString.toLowerCase()) || row.getName().contains(charSequence)) {
-                            filteredList.add(row);
-                        }
-                    }
-
-                    productfilteredresponse = filteredList;
-                }
-
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = productfilteredresponse;
-                return filterResults;
-            }
-
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                productfilteredresponse = (ArrayList<ProductsResponse>) filterResults.values;
-                notifyDataSetChanged();
-            }
-        };
-    }
-
-    public interface ContactsAdapterListener {
-        void onContactSelected(ProductsResponse contact);
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView productname, productcompany, productamount, productdescription, productavailable, productcategory;
@@ -123,6 +86,11 @@ public class ProductDataAdapter extends RecyclerView.Adapter<ProductDataAdapter.
             productcategory = view.findViewById(R.id.product_category);
             productbtn = view.findViewById(R.id.product_btn);
         }
+    }
+
+    public void filterList(ArrayList<ProductsResponse> filterdNames) {
+        this.mProductsList = filterdNames;
+        notifyDataSetChanged();
     }
 }
 

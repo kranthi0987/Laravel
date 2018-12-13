@@ -140,6 +140,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable e) {
+                progressDoalog.hide();
                 MaterialStyledDialog dialog = new MaterialStyledDialog.Builder(LoginActivity.this)
                         .setTitle("Error!")
                         .setDescription(e.toString())
