@@ -59,6 +59,7 @@ public class CommonUsedMethods {
             @Override
             public void onComplete() {
 //                progressDoalog.hide();
+                session.setLogin(false);
                 Toast.makeText(getContext(), "Successfully logout", Toast.LENGTH_SHORT).show();
             }
 
@@ -76,4 +77,5 @@ public class CommonUsedMethods {
         });
 
     }
+
 }

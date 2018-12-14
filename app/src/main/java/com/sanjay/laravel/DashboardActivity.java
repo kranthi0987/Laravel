@@ -76,9 +76,9 @@ public class DashboardActivity extends AppCompatActivity
         session = new SessionManager(DashboardActivity.this);
         token = "Bearer " + session.getToken();
 //        viewusercall();
-//        if (!session.isLoggedIn()) {
-//            logoutUser();
-//        }
+        if (!session.isLoggedIn()) {
+            logoutUser();
+        }
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -114,9 +114,10 @@ public class DashboardActivity extends AppCompatActivity
                 //get suggestions based on newQuery
 
                 //pass them on to the search view
-//                mSearchView.swapSuggestions();
+                //   mSearchView.swapSuggestions();
             }
         });
+
         // Logout button click event
 //        btnLogout.setOnClickListener(new View.OnClickListener() {
 //

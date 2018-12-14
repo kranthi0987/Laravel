@@ -173,8 +173,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void viewusercall() {
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-
-
         Observable<UserSuccessResponse> observable = apiInterface.USER_SUCCESS_RESPONSE_OBSERVABLE(session.getToken_type() + " " + session.getToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -200,8 +198,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete() {
 //                Toast.makeText(getContext(), "user details retrieved", Toast.LENGTH_SHORT).show();
-
-
+                session.setLogin(true);
                 Intent i = new Intent(getApplicationContext(), DashboardActivity.class);
                 startActivity(i);
                 finish();

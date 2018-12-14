@@ -34,12 +34,9 @@ public class SessionManager {
     }
 
     public void setLogin(boolean isLoggedIn) {
-
+//       if set login is true it means it logged in already else it will go false
         editor.putBoolean(KEY_IS_LOGGEDIN, isLoggedIn);
-
-        // commit changes
         editor.commit();
-
         Log.d(TAG, "User login session modified!");
     }
 
