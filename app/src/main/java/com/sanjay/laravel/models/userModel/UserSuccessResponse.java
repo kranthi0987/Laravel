@@ -20,7 +20,7 @@ public class UserSuccessResponse extends BaseObservable {
     private Integer userId;
     @SerializedName("address_id")
     @Expose
-    private Integer addressId;
+    private String addressId;
     @SerializedName("user_name")
     @Expose
     private String userName;
@@ -47,11 +47,7 @@ public class UserSuccessResponse extends BaseObservable {
     private String updatedAt;
     @SerializedName("deleted_at")
     @Expose
-    private Object deletedAt;
-    @SerializedName("avatar_url")
-    @Expose
-    private String avatarUrl;
-
+    private String deletedAt;
 
     public Integer getId() {
         return id;
@@ -59,14 +55,6 @@ public class UserSuccessResponse extends BaseObservable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
     }
 
     @BindingAdapter({"android:profileImage"})
@@ -79,15 +67,20 @@ public class UserSuccessResponse extends BaseObservable {
         // Picasso.with(view.getContext()).load(imageUrl).placeholder(R.drawable.placeholder).into(view);
     }
 
-    public void setAddressId(Integer addressId) {
-        this.addressId = addressId;
+    @Bindable
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+        notifyPropertyChanged(BR.userId);
     }
 
     @Bindable
-    public Integer getAddressId() {
+    public String getAddressId() {
         return addressId;
     }
-
     @Bindable
     public String getUserName() {
         return userName;
@@ -118,10 +111,15 @@ public class UserSuccessResponse extends BaseObservable {
         notifyPropertyChanged(BR.userPhoneNumber);
     }
 
-    public void setUserAvatar(String userAvatar) {
-        this.userAvatar = userAvatar;
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
+        notifyPropertyChanged(BR.addressId);
     }
 
+    @Bindable
+    public String getUserAvatar() {
+        return userAvatar;
+    }
     public Integer getActive() {
         return active;
     }
@@ -130,15 +128,15 @@ public class UserSuccessResponse extends BaseObservable {
         this.active = active;
     }
 
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
+        notifyPropertyChanged(BR.userAvatar);
+    }
+
     @Bindable
-    public String getUserAvatar() {
-        return userAvatar;
+    public String getUserOtherDetails() {
+        return userOtherDetails;
     }
-
-    public void setUserOtherDetails(String userOtherDetails) {
-        this.userOtherDetails = userOtherDetails;
-    }
-
     public String getCreatedAt() {
         return createdAt;
     }
@@ -155,26 +153,17 @@ public class UserSuccessResponse extends BaseObservable {
         this.updatedAt = updatedAt;
     }
 
-    public Object getDeletedAt() {
+    public void setUserOtherDetails(String userOtherDetails) {
+        this.userOtherDetails = userOtherDetails;
+        notifyPropertyChanged(BR.userOtherDetails);
+    }
+
+    public String getDeletedAt() {
         return deletedAt;
     }
 
-    public void setDeletedAt(Object deletedAt) {
+    public void setDeletedAt(String deletedAt) {
         this.deletedAt = deletedAt;
-    }
-
-    @Bindable
-    public String getUserOtherDetails() {
-        return userOtherDetails;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
-
-    @Bindable
-    public String getAvatarUrl() {
-        return avatarUrl;
     }
 
 }

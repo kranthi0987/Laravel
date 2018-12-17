@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean testing() {
-        logincall("test@gmail.com", "123456", true);
+        logincall("test3@gmail.com", "123456", true);
         return true;
     }
 
@@ -214,7 +214,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onNext(UserSuccessResponse Listdata) {
                 String name = Listdata.getUserName();
                 String email = Listdata.getEmail();
-                String avatar = Listdata.getAvatarUrl();
+                String avatar = Listdata.getUserAvatar();
                 // Displaying the user details on the screen
 //                txtName.setText(name);
 //                txtEmail.setText(email);

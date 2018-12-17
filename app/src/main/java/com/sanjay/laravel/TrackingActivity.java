@@ -78,7 +78,7 @@ public class TrackingActivity extends AppCompatActivity
         TextView nav_email = hView.findViewById(R.id.nav_email);
         nav_user.setText(session.getName());
         nav_email.setText(session.getEmail());
-        Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + session.getAvatar() + "avatar.png").into(nav_avatar);
+        Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + session.getAvatar()).into(nav_avatar);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -197,7 +197,7 @@ public class TrackingActivity extends AppCompatActivity
         String output = "json";
 
         // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=AIzaSyBG_crUSSMa52eX48grCu3kCn2M2oAi_Do";
 
 
         return url;

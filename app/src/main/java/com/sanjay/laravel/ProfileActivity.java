@@ -70,7 +70,7 @@ public class ProfileActivity extends AppCompatActivity
         TextView nav_email = hView.findViewById(R.id.nav_email);
         nav_user.setText(session.getName());
         nav_email.setText(session.getEmail());
-        Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + session.getAvatar() + "avatar.png").into(nav_avatar);
+        Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + session.getAvatar()).into(nav_avatar);
         navigationView.setNavigationItemSelectedListener(this);
         renderProfile();
     }
@@ -191,7 +191,6 @@ public class ProfileActivity extends AppCompatActivity
                 progressDoalog.hide();
                 model.setEmail(Listdata.getEmail());
                 model.setUserName(Listdata.getUserName());
-                model.setAvatarUrl(Listdata.getAvatarUrl());
                 model.setUserAvatar(Listdata.getUserAvatar());
                 model.setUserPhoneNumber(Listdata.getUserPhoneNumber());
                 model.setUserOtherDetails(Listdata.getUserOtherDetails());

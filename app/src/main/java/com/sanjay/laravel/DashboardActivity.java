@@ -102,7 +102,7 @@ public class DashboardActivity extends AppCompatActivity
         TextView nav_email = hView.findViewById(R.id.nav_email);
         nav_user.setText(session.getName());
         nav_email.setText(session.getEmail());
-        Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + session.getAvatar() + "avatar.png").into(nav_avatar);
+        Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + session.getAvatar()).into(nav_avatar);
         navigationView.setNavigationItemSelectedListener(this);
 
         mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
@@ -298,5 +298,12 @@ public class DashboardActivity extends AppCompatActivity
 
         //calling a method of the adapter class and passing the filtered list
         mProductAdapter.filterList(filterdNames);
+    }
+
+    public class MyClickHandlers {
+
+        public void onFabClicked(View view) {
+            Toast.makeText(getApplicationContext(), "FAB clicked!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

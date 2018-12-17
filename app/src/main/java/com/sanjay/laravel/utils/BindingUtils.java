@@ -8,7 +8,7 @@ public class BindingUtils {
     }
 
     public static String avatar(String text1) {
-        return AppConstants.BASE_URL + text1 + "/avatar.png";
+        return AppConstants.BASE_URL + text1;
     }
 
     // https://stackoverflow.com/questions/9769554/how-to-convert-number-into-k-thousands-m-million-and-b-billion-suffix-in-jsp

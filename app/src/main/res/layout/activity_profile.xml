@@ -8,6 +8,10 @@
 
         <import type="com.sanjay.laravel.utils.BindingUtils" />
         <variable
+            name="handlers"
+            type="com.sanjay.laravel.DashboardActivity.MyClickHandlers" />
+
+        <variable
             name="user"
             type="com.sanjay.laravel.models.userModel.UserSuccessResponse" />
     </data>

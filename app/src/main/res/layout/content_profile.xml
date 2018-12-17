@@ -8,6 +8,10 @@
 
         <import type="com.sanjay.laravel.utils.BindingUtils" />
         <variable
+            name="handlers"
+            type="com.sanjay.laravel.DashboardActivity.MyClickHandlers" />
+
+        <variable
             name="user"
             type="com.sanjay.laravel.models.userModel.UserSuccessResponse" />
     </data>
@@ -42,7 +46,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/fab_margin"
                     android:padding="10dp"
-                    android:profileImage="@{BindingUtils.avatar(user.avatarUrl)}" />
+                    android:profileImage="@{BindingUtils.avatar(user.userAvatar)}" />
 
                 <EditText
                     android:id="@+id/email"
@@ -110,6 +114,7 @@
                     android:layout_marginTop="20dip"
                     android:background="@color/btn_login_bg"
                     android:text="UPDATE"
+                    android:onClick="@{handlers::onFabClicked}"
                     android:textColor="@color/btn_login" />
 
             </LinearLayout>
