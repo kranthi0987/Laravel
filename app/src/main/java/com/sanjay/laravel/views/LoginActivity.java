@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean testing() {
-        logincall("test3@gmail.com", "123456", true);
+        logincall("test@gmail.com", "123456", true);
         return true;
     }
 
