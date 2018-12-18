@@ -2,11 +2,11 @@ package com.sanjay.laravel.utils;
 
 import android.content.Intent;
 import android.widget.Toast;
-import com.sanjay.laravel.LoginActivity;
 import com.sanjay.laravel.MyApplication;
 import com.sanjay.laravel.models.logoutmodel.LogoutSuccessResponse;
 import com.sanjay.laravel.retroFit.ApiClient;
 import com.sanjay.laravel.retroFit.ApiInterface;
+import com.sanjay.laravel.views.LoginActivity;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;

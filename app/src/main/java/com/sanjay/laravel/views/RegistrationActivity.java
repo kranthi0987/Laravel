@@ -1,4 +1,4 @@
-package com.sanjay.laravel;
+package com.sanjay.laravel.views;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.sanjay.laravel.R;
 import com.sanjay.laravel.models.registrationModel.RegisterRequest;
 import com.sanjay.laravel.models.registrationModel.RegisterSuccessResponse;
 import com.sanjay.laravel.retroFit.ApiClient;

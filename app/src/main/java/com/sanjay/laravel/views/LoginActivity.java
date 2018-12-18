@@ -1,4 +1,4 @@
-package com.sanjay.laravel;
+package com.sanjay.laravel.views;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.sanjay.laravel.R;
 import com.sanjay.laravel.models.loginModel.LoginPassRequest;
 import com.sanjay.laravel.models.loginModel.LoginResponse;
 import com.sanjay.laravel.models.userModel.UserSuccessResponse;

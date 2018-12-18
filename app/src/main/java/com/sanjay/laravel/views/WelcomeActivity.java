@@ -1,4 +1,4 @@
-package com.sanjay.laravel;
+package com.sanjay.laravel.views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.view.*;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.sanjay.laravel.R;
 import com.sanjay.laravel.utils.SessionManager;
 
 public class WelcomeActivity extends AppCompatActivity {

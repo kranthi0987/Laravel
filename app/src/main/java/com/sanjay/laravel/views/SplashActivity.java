@@ -1,4 +1,4 @@
-package com.sanjay.laravel;
+package com.sanjay.laravel.views;
 
 import android.Manifest;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.sanjay.laravel.R;
 import com.sanjay.laravel.network.ApplicationUtility;
 
 import java.util.List;

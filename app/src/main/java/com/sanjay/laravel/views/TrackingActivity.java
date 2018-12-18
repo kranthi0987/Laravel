@@ -1,4 +1,4 @@
-package com.sanjay.laravel;
+package com.sanjay.laravel.views;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -26,6 +26,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.sanjay.laravel.AppConstants;
+import com.sanjay.laravel.MyApplication;
+import com.sanjay.laravel.R;
 import com.sanjay.laravel.tracking.DirectionsJSONParser;
 import org.json.JSONObject;
 

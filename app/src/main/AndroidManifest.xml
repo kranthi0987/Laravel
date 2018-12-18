@@ -28,17 +28,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" />
+        <activity android:name=".views.MainActivity" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".views.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RegistrationActivity"
+            android:name=".views.RegistrationActivity"
             android:label="@string/title_activity_registration"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".views.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_splash"
             android:theme="@style/FullscreenTheme">
@@ -49,7 +49,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DashboardActivity"
+            android:name=".views.DashboardActivity"
             android:label="@string/title_activity_dashboard"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -62,11 +62,11 @@
 
         </activity>
         <activity
-            android:name=".SignupActivity"
+            android:name=".views.SignupActivity"
             android:label="@string/title_activity_signup"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".views.WelcomeActivity"
             android:label="@string/title_activity_welcome"
             android:theme="@style/AppTheme" />
 
@@ -79,15 +79,15 @@
         </receiver>
 
         <activity
-            android:name=".ResetPassword"
+            android:name=".views.ResetPassword"
             android:label="@string/title_activity_reset_password"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".views.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".MapActivity"
+            android:name=".views.MapActivity"
             android:label="@string/title_activity_map"
             android:theme="@style/AppTheme" />
         <!--
@@ -103,7 +103,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".TrackingActivity"
+            android:name=".views.TrackingActivity"
             android:label="@string/title_activity_tracking"
             android:theme="@style/AppTheme"></activity>
     </application>

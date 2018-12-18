@@ -1,4 +1,4 @@
-package com.sanjay.laravel;
+package com.sanjay.laravel.views;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.sanjay.laravel.R;
 import com.sanjay.laravel.models.forgetPasswordModel.ForgetPasswordRequest;
 import com.sanjay.laravel.models.forgetPasswordModel.ForgetPasswordResponse;
 import com.sanjay.laravel.retroFit.ApiClient;

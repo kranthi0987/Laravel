@@ -1,4 +1,4 @@
-package com.sanjay.laravel;
+package com.sanjay.laravel.views;
 
 import android.Manifest;
 import android.content.Context;
@@ -35,6 +35,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.sanjay.laravel.AppConstants;
+import com.sanjay.laravel.MyApplication;
+import com.sanjay.laravel.R;
 
 import java.io.IOException;
 import java.util.List;
