@@ -1,4 +1,4 @@
-package com.sanjay.laravel.views;
+package com.sanjay.laravel.views.activties;
 
 import android.Manifest;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.sanjay.laravel;
+package com.sanjay.laravel.app;
 
 import android.app.Application;
 import android.content.Context;

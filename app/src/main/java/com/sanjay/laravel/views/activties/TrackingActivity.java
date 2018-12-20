@@ -1,4 +1,4 @@
-package com.sanjay.laravel.views;
+package com.sanjay.laravel.views.activties;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -26,9 +26,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.sanjay.laravel.AppConstants;
-import com.sanjay.laravel.MyApplication;
 import com.sanjay.laravel.R;
+import com.sanjay.laravel.app.AppConstants;
+import com.sanjay.laravel.app.MyApplication;
 import com.sanjay.laravel.tracking.DirectionsJSONParser;
 import org.json.JSONObject;
 
@@ -42,7 +42,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.sanjay.laravel.MyApplication.session;
+import static com.sanjay.laravel.app.MyApplication.session;
 import static com.sanjay.laravel.utils.CommonUsedMethods.logoutUser;
 
 public class TrackingActivity extends AppCompatActivity

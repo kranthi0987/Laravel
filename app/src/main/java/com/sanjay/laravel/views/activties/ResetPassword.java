@@ -1,4 +1,4 @@
-package com.sanjay.laravel.views;
+package com.sanjay.laravel.views.activties;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,15 +12,15 @@ import android.widget.Toast;
 import com.sanjay.laravel.R;
 import com.sanjay.laravel.models.forgetPasswordModel.ForgetPasswordRequest;
 import com.sanjay.laravel.models.forgetPasswordModel.ForgetPasswordResponse;
-import com.sanjay.laravel.retroFit.ApiClient;
-import com.sanjay.laravel.retroFit.ApiInterface;
+import com.sanjay.laravel.network.retroFit.ApiClient;
+import com.sanjay.laravel.network.retroFit.ApiInterface;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.sanjay.laravel.MyApplication.getContext;
+import static com.sanjay.laravel.app.MyApplication.getContext;
 
 public class ResetPassword extends AppCompatActivity {
     public static ApiInterface apiInterface;

@@ -1,4 +1,4 @@
-package com.sanjay.laravel.retroFit;
+package com.sanjay.laravel.network.retroFit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -6,7 +6,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.sanjay.laravel.AppConstants.BASE_URL;
+import static com.sanjay.laravel.app.AppConstants.BASE_URL;
 
 public class ApiClient {
     private static Retrofit retrofit = null;

@@ -1,7 +1,8 @@
-package com.sanjay.laravel.views;
+package com.sanjay.laravel.views.activties;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -10,78 +11,47 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.arlib.floatingsearchview.FloatingSearchView;
 import com.bumptech.glide.Glide;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
-import com.sanjay.laravel.AppConstants;
-import com.sanjay.laravel.MyApplication;
 import com.sanjay.laravel.R;
-import com.sanjay.laravel.adapters.ProductDataAdapter;
-import com.sanjay.laravel.models.products.ProductsResponse;
-import com.sanjay.laravel.retroFit.ApiClient;
-import com.sanjay.laravel.retroFit.ApiInterface;
-import com.sanjay.laravel.utils.SessionManager;
+import com.sanjay.laravel.app.AppConstants;
+import com.sanjay.laravel.app.MyApplication;
+import com.sanjay.laravel.databinding.ActivityProfileBinding;
+import com.sanjay.laravel.models.userModel.UserSuccessResponse;
+import com.sanjay.laravel.network.retroFit.ApiClient;
+import com.sanjay.laravel.network.retroFit.ApiInterface;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import io.realm.Realm;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.sanjay.laravel.MyApplication.getContext;
+import static com.sanjay.laravel.app.MyApplication.session;
 import static com.sanjay.laravel.utils.CommonUsedMethods.logoutUser;
 
-public class DashboardActivity extends AppCompatActivity
+public class ProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     public static ApiInterface apiInterface;
-    private TextView txtName;
-    private TextView txtEmail;
-    //    private Button btnLogout;
-    public SessionManager session;
-    Realm realm;
-    String token = null;
-
-    private RecyclerView mRecyclerView;
-
-    private ProductDataAdapter mProductAdapter;
-
-    private ArrayList<ProductsResponse> mProductArraylist;
-
-    private FloatingSearchView mSearchView;
-
+    private ActivityProfileBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+//        setContentView(R.layout.activity_profile);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mSearchView = findViewById(R.id.floating_search_view);
-        Realm realm = Realm.getDefaultInstance();
 
-
-//        txtName = findViewById(R.id.name);
-//        txtEmail = findViewById(R.id.email);
-//        btnLogout = findViewById(R.id.btnLogout);
-        // session manager
-        session = new SessionManager(DashboardActivity.this);
-        token = "Bearer " + session.getToken();
-//        viewusercall();
-        if (!session.isLoggedIn()) {
-            logoutUser();
-        }
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +67,6 @@ public class DashboardActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        mSearchView.attachNavigationDrawerToMenuButton(drawer);
         NavigationView navigationView = findViewById(R.id.nav_view);
         View hView = navigationView.getHeaderView(0);
         ImageView nav_avatar = hView.findViewById(R.id.nav_avatar);
@@ -107,54 +76,7 @@ public class DashboardActivity extends AppCompatActivity
         nav_email.setText(session.getEmail());
         Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + session.getAvatar()).into(nav_avatar);
         navigationView.setNavigationItemSelectedListener(this);
-
-        mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
-            @Override
-            public void onSearchTextChanged(String oldQuery, final String newQuery) {
-
-                filter(newQuery);
-                Toast.makeText(getApplicationContext(), "" + oldQuery + "" + newQuery, Toast.LENGTH_SHORT).show();
-                //get suggestions based on newQuery
-
-                //pass them on to the search view
-                //   mSearchView.swapSuggestions();
-            }
-        });
-
-        // Logout button click event
-//        btnLogout.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                logoutUser();
-//            }
-//        });
-        initRecyclerView();
-        loadproductlist();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
-    public void onPause() {
-
-        super.onPause();
-    }
-
-    private void initRecyclerView() {
-
-        mRecyclerView = findViewById(R.id.product_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        mRecyclerView.setLayoutManager(layoutManager);
-    }
-
-    private void initviews() {
-
+        renderProfile();
     }
 
     @Override
@@ -188,6 +110,7 @@ public class DashboardActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -223,44 +146,43 @@ public class DashboardActivity extends AppCompatActivity
         return true;
     }
 
-
-    private void loadproductlist() {
-        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+    /**
+     * Renders user profile data
+     */
+    private void renderProfile() {
+        UserSuccessResponse model = new UserSuccessResponse();
         final ProgressDialog progressDoalog;
-        progressDoalog = new ProgressDialog(DashboardActivity.this);
+        progressDoalog = new ProgressDialog(ProfileActivity.this);
         progressDoalog.setMax(100);
         progressDoalog.setMessage("Its loading....");
         progressDoalog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDoalog.show();
-
-
-        Observable<List<ProductsResponse>> observable = apiInterface.PRODUCTS_RESPONSE_OBSERVABLE()
+        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        Observable<UserSuccessResponse> observable = apiInterface.USER_SUCCESS_RESPONSE_OBSERVABLE(session.getToken_type() + " " + session.getToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
-        observable.subscribe(new Observer<List<ProductsResponse>>() {
+        observable.subscribe(new Observer<UserSuccessResponse>() {
 
             @Override
             public void onError(Throwable e) {
-                progressDoalog.hide();
-                MaterialStyledDialog dialog = new MaterialStyledDialog.Builder(DashboardActivity.this)
+//                Toast.makeText(getContext(), "error" + e, Toast.LENGTH_SHORT).show();
+                Log.i("login", "onError: " + e);
+                MaterialStyledDialog dialog = new MaterialStyledDialog.Builder(ProfileActivity.this)
                         .setTitle("Error!")
+                        .setIcon(R.drawable.error)
+                        .withIconAnimation(true)
+                        .withDialogAnimation(true)
+                        .withDarkerOverlay(true)
+                        .setHeaderColor(R.color.background)
                         .setDescription(e.toString())
                         .build();
+
                 dialog.show();
-                Toast.makeText(getContext(), "error" + e, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onComplete() {
-                progressDoalog.hide();
 
-
-//                MaterialStyledDialog dialog = new MaterialStyledDialog.Builder(DashboardActivity.this)
-//                        .setTitle("Error!")
-//                        .setDescription("user deatils retrived")
-//                        .build();
-//                dialog.show();
-//                Toast.makeText(getContext(), "user details retrieved", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -269,39 +191,27 @@ public class DashboardActivity extends AppCompatActivity
             }
 
             @Override
-            public void onNext(List<ProductsResponse> Listdata) {
-                handleResponse(Listdata);
-
-
+            public void onNext(UserSuccessResponse Listdata) {
+                progressDoalog.hide();
+                model.setEmail(Listdata.getEmail());
+                model.setUserName(Listdata.getUserName());
+                model.setUserAvatar(Listdata.getUserAvatar());
+                model.setUserPhoneNumber(Listdata.getUserPhoneNumber());
+                model.setUserOtherDetails(Listdata.getUserOtherDetails());
+//                model.setAddressId(Listdata.getAddressId());
+                binding.setUser(model);
             }
 
         });
 
     }
 
-    private void handleResponse(List<ProductsResponse> productsResponseList) {
+    public class MyClickHandlers {
 
-        mProductArraylist = new ArrayList<>(productsResponseList);
-        mProductAdapter = new ProductDataAdapter(mProductArraylist, DashboardActivity.this);
-        mRecyclerView.setAdapter(mProductAdapter);
-    }
-
-    private void filter(String text) {
-        //new array list that will hold the filtered data
-        ArrayList<ProductsResponse> filterdNames = new ArrayList<>();
-
-        //looping through existing elements
-        for (ProductsResponse s : filterdNames) {
-            //if the existing elements contains the search input
-            if (s.getName().contains(text.toLowerCase())) {
-                //adding the element to filtered list
-                filterdNames.add(s);
-            }
+        public void onFabClicked(View view) {
+            Toast.makeText(getApplicationContext(), "FAB clicked!", Toast.LENGTH_SHORT).show();
         }
-
-        //calling a method of the adapter class and passing the filtered list
-        mProductAdapter.filterList(filterdNames);
     }
-
-
 }
+
+

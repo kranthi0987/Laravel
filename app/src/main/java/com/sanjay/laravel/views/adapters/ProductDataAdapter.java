@@ -1,4 +1,4 @@
-package com.sanjay.laravel.adapters;
+package com.sanjay.laravel.views.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,9 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
-import com.sanjay.laravel.AppConstants;
-import com.sanjay.laravel.MyApplication;
 import com.sanjay.laravel.R;
+import com.sanjay.laravel.app.AppConstants;
+import com.sanjay.laravel.app.MyApplication;
 import com.sanjay.laravel.models.products.ProductsResponse;
 
 import java.util.ArrayList;

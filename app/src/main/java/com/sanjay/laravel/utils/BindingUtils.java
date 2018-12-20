@@ -1,6 +1,6 @@
 package com.sanjay.laravel.utils;
 
-import com.sanjay.laravel.AppConstants;
+import com.sanjay.laravel.app.AppConstants;
 
 public class BindingUtils {
     public static String capitalize(String text) {

@@ -1,4 +1,4 @@
-package com.sanjay.laravel.retroFit;
+package com.sanjay.laravel.network.retroFit;
 
 import com.sanjay.laravel.models.forgetPasswordModel.ForgetPasswordRequest;
 import com.sanjay.laravel.models.forgetPasswordModel.ForgetPasswordResponse;

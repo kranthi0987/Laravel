@@ -2,19 +2,19 @@ package com.sanjay.laravel.utils;
 
 import android.content.Intent;
 import android.widget.Toast;
-import com.sanjay.laravel.MyApplication;
+import com.sanjay.laravel.app.MyApplication;
 import com.sanjay.laravel.models.logoutmodel.LogoutSuccessResponse;
-import com.sanjay.laravel.retroFit.ApiClient;
-import com.sanjay.laravel.retroFit.ApiInterface;
-import com.sanjay.laravel.views.LoginActivity;
+import com.sanjay.laravel.network.retroFit.ApiClient;
+import com.sanjay.laravel.network.retroFit.ApiInterface;
+import com.sanjay.laravel.views.activties.LoginActivity;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.sanjay.laravel.MyApplication.getContext;
-import static com.sanjay.laravel.MyApplication.session;
+import static com.sanjay.laravel.app.MyApplication.getContext;
+import static com.sanjay.laravel.app.MyApplication.session;
 
 public class CommonUsedMethods {
     public static ApiInterface apiInterface;

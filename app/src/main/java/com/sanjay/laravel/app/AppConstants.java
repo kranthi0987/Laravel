@@ -1,4 +1,4 @@
-package com.sanjay.laravel;
+package com.sanjay.laravel.app;
 
 public class AppConstants {
         public static final String BASE_URL = "http://192.168.0.110:8000";

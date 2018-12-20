@@ -9,7 +9,7 @@
         <import type="com.sanjay.laravel.utils.BindingUtils" />
         <variable
             name="handlers"
-            type="com.sanjay.laravel.views.ProfileActivity.MyClickHandlers" />
+            type="com.sanjay.laravel.views.activties.ProfileActivity" />
 
         <variable
             name="user"
@@ -19,7 +19,7 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.ProfileActivity">
+        tools:context=".views.activties.ProfileActivity">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"

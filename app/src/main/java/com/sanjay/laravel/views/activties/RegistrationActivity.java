@@ -1,4 +1,4 @@
-package com.sanjay.laravel.views;
+package com.sanjay.laravel.views.activties;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,8 +15,8 @@ import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.sanjay.laravel.R;
 import com.sanjay.laravel.models.registrationModel.RegisterRequest;
 import com.sanjay.laravel.models.registrationModel.RegisterSuccessResponse;
-import com.sanjay.laravel.retroFit.ApiClient;
-import com.sanjay.laravel.retroFit.ApiInterface;
+import com.sanjay.laravel.network.retroFit.ApiClient;
+import com.sanjay.laravel.network.retroFit.ApiInterface;
 import com.sanjay.laravel.utils.SessionManager;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -26,7 +26,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import java.util.regex.Pattern;
 
-import static com.sanjay.laravel.MyApplication.getContext;
+import static com.sanjay.laravel.app.MyApplication.getContext;
 
 public class RegistrationActivity extends AppCompatActivity {
 

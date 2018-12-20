@@ -9,7 +9,7 @@
         <import type="com.sanjay.laravel.utils.BindingUtils" />
         <variable
             name="handlers"
-            type="com.sanjay.laravel.views.ProfileActivity.MyClickHandlers" />
+            type="com.sanjay.laravel.views.activties.ProfileActivity" />
 
         <variable
             name="user"

@@ -1,4 +1,4 @@
-package com.sanjay.laravel.views;
+package com.sanjay.laravel.views.activties;
 
 import android.Manifest;
 import android.content.Context;
@@ -35,15 +35,15 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.sanjay.laravel.AppConstants;
-import com.sanjay.laravel.MyApplication;
 import com.sanjay.laravel.R;
+import com.sanjay.laravel.app.AppConstants;
+import com.sanjay.laravel.app.MyApplication;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-import static com.sanjay.laravel.MyApplication.session;
+import static com.sanjay.laravel.app.MyApplication.session;
 import static com.sanjay.laravel.utils.CommonUsedMethods.logoutUser;
 
 public class MapActivity extends AppCompatActivity

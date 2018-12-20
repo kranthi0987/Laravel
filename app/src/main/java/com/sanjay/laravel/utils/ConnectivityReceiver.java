@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import com.sanjay.laravel.MyApplication;
+import com.sanjay.laravel.app.MyApplication;
 
 public class ConnectivityReceiver extends BroadcastReceiver {
 
