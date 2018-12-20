@@ -56,6 +56,19 @@ public class UserSuccessResponse extends BaseObservable {
     public void setId(Integer id) {
         this.id = id;
     }
+    @Bindable
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+        notifyPropertyChanged(BR.userId);
+    }
+    @Bindable
+    public String getAddressId() {
+        return addressId;
+    }
 
     @BindingAdapter({"android:profileImage"})
     public static void loadImage(ImageView view, String imageUrl) {
@@ -66,29 +79,14 @@ public class UserSuccessResponse extends BaseObservable {
         // If you consider Picasso, follow the below
         // Picasso.with(view.getContext()).load(imageUrl).placeholder(R.drawable.placeholder).into(view);
     }
-
-    @Bindable
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-        notifyPropertyChanged(BR.userId);
-    }
-
-    @Bindable
-    public String getAddressId() {
-        return addressId;
-    }
     @Bindable
     public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-        notifyPropertyChanged(BR.userName);
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
+        notifyPropertyChanged(BR.addressId);
     }
 
     @Bindable
@@ -111,11 +109,10 @@ public class UserSuccessResponse extends BaseObservable {
         notifyPropertyChanged(BR.userPhoneNumber);
     }
 
-    public void setAddressId(String addressId) {
-        this.addressId = addressId;
-        notifyPropertyChanged(BR.addressId);
-    }
+    public void setUserName(String userName) {
+        this.userName = userName;
 
+    }
     @Bindable
     public String getUserAvatar() {
         return userAvatar;
@@ -133,10 +130,6 @@ public class UserSuccessResponse extends BaseObservable {
         notifyPropertyChanged(BR.userAvatar);
     }
 
-    @Bindable
-    public String getUserOtherDetails() {
-        return userOtherDetails;
-    }
     public String getCreatedAt() {
         return createdAt;
     }
@@ -153,17 +146,17 @@ public class UserSuccessResponse extends BaseObservable {
         this.updatedAt = updatedAt;
     }
 
-    public void setUserOtherDetails(String userOtherDetails) {
-        this.userOtherDetails = userOtherDetails;
-        notifyPropertyChanged(BR.userOtherDetails);
-    }
-
     public String getDeletedAt() {
         return deletedAt;
     }
 
     public void setDeletedAt(String deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    @Bindable
+    public void setUserOtherDetails(String userOtherDetails) {
+        this.userOtherDetails = userOtherDetails;
     }
 
 }
