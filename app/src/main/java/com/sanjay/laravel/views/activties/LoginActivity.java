@@ -2,6 +2,8 @@ package com.sanjay.laravel.views.activties;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.databinding.BindingAdapter;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,12 +15,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.sanjay.laravel.R;
+import com.sanjay.laravel.databinding.ActivityLoginBinding;
 import com.sanjay.laravel.models.loginModel.LoginPassRequest;
 import com.sanjay.laravel.models.loginModel.LoginResponse;
 import com.sanjay.laravel.models.userModel.UserSuccessResponse;
 import com.sanjay.laravel.network.retroFit.ApiClient;
 import com.sanjay.laravel.network.retroFit.ApiInterface;
 import com.sanjay.laravel.utils.SessionManager;
+import com.sanjay.laravel.viewModels.LoginViewModel;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -43,15 +47,26 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox remember_me;
     Realm realm;
 
+    @BindingAdapter({"toastMessage"})
+    public static void runMe(View view, String message) {
+        if (message != null)
+            Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        ActivityLoginBinding activityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+//        setContentView(R.layout.activity_login);
+
+        activityLoginBinding.setLoginViewmodel(new LoginViewModel());
+        activityLoginBinding.executePendingBindings();
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        inputEmail = findViewById(R.id.email);
-        inputPassword = findViewById(R.id.password);
-        btnLogin = findViewById(R.id.btnLogin);
+//        inputEmail = findViewById(R.id.email);
+//        inputPassword = findViewById(R.id.password);
+//        btnLogin = findViewById(R.id.btnLogin);
         btnLinkToRegister = findViewById(R.id.btnLinkToRegisterScreen);
         getBtnLinkToPasswordReset = findViewById(R.id.btnLinkTopasswordrestScreen);
         remember_me = findViewById(R.id.remember_me);
@@ -68,30 +83,30 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 // Login button Click Event
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View view) {
-                String email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
-                Boolean check;
-                check = remember_me.isChecked();
-                // Check for empty data in the form
-                if (testing()) {
-
-                } else {
-                    if (!email.isEmpty() && !password.isEmpty()) {
-                        // login user
-                        logincall(email, password, check);
-                    } else {
-                        // Prompt user to enter credentials
-                        Toast.makeText(getApplicationContext(),
-                                "Please enter the credentials!", Toast.LENGTH_LONG)
-                                .show();
-                    }
-                }
-            }
-
-        });
+//        btnLogin.setOnClickListener(new View.OnClickListener() {
+//
+//            public void onClick(View view) {
+//                String email = inputEmail.getText().toString().trim();
+//                String password = inputPassword.getText().toString().trim();
+//                Boolean check;
+//                check = remember_me.isChecked();
+//                // Check for empty data in the form
+//                if (testing()) {
+//
+//                } else {
+//                    if (!email.isEmpty() && !password.isEmpty()) {
+//                        // login user
+//                        logincall(email, password, check);
+//                    } else {
+//                        // Prompt user to enter credentials
+//                        Toast.makeText(getApplicationContext(),
+//                                "Please enter the credentials!", Toast.LENGTH_LONG)
+//                                .show();
+//                    }
+//                }
+//            }
+//
+//        });
 
         // Link to Register Screen
         btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +129,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-
     public boolean testing() {
         logincall("test@gmail.com", "123456", true);
         return true;
@@ -129,10 +143,10 @@ public class LoginActivity extends AppCompatActivity {
         progressDoalog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDoalog.show();
 
-        final LoginPassRequest logindata = new LoginPassRequest();
-        logindata.setEmail(email);
-        logindata.setPassword(password);
-        logindata.setRememberMe(check);
+        final LoginPassRequest logindata = new LoginPassRequest(email, password, check);
+//        logindata.setEmail(email);
+//        logindata.setPassword(password);
+//        logindata.setRememberMe(check);
 
         Observable<LoginResponse> observable = apiInterface.LOGIN_RESPONSE_OBSERVABLE(logindata)
                 .subscribeOn(Schedulers.newThread())
