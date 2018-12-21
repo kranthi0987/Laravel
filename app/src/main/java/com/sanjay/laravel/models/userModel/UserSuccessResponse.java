@@ -154,9 +154,14 @@ public class UserSuccessResponse extends BaseObservable {
         this.deletedAt = deletedAt;
     }
 
+
     @Bindable
-    public void setUserOtherDetails(String userOtherDetails) {
-        this.userOtherDetails = userOtherDetails;
+    public String getUserOtherDetails() {
+        return userOtherDetails;
     }
 
+    public void setUserOtherDetails(String userOtherDetails) {
+        this.userOtherDetails = userOtherDetails;
+        notifyPropertyChanged(BR.userOtherDetails);
+    }
 }
