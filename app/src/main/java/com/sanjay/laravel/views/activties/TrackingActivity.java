@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -29,21 +28,17 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.sanjay.laravel.R;
 import com.sanjay.laravel.app.AppConstants;
-import com.sanjay.laravel.app.MyApplication;
 import com.sanjay.laravel.tracking.DirectionsJSONParser;
-
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.sanjay.laravel.app.MyApplication.getContext;
 import static com.sanjay.laravel.app.MyApplication.session;
 import static com.sanjay.laravel.utils.CommonUsedMethods.logoutUser;
 
@@ -83,7 +78,7 @@ public class TrackingActivity extends AppCompatActivity
         TextView nav_email = hView.findViewById(R.id.nav_email);
         nav_user.setText(session.getName());
         nav_email.setText(session.getEmail());
-        Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + session.getAvatar()).into(nav_avatar);
+        Glide.with(getContext()).load(AppConstants.BASE_URL + File.separator + "avatars" + File.separator + session.getAvatar()).into(nav_avatar);
         navigationView.setNavigationItemSelectedListener(this);
     }
 

@@ -25,22 +25,24 @@ import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.google.gson.JsonObject;
 import com.sanjay.laravel.R;
 import com.sanjay.laravel.app.AppConstants;
+import com.sanjay.laravel.app.MyApplication;
 import com.sanjay.laravel.databinding.ActivityProfileBinding;
 import com.sanjay.laravel.models.DefaultResponse;
 import com.sanjay.laravel.models.userModel.UserSuccessResponse;
 import com.sanjay.laravel.network.retroFit.ApiClient;
 import com.sanjay.laravel.network.retroFit.ApiInterface;
 import com.sanjay.laravel.utils.CommonUsedMethods;
+import com.sanjay.laravel.utils.utility;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 import java.io.File;
-import java.util.Objects;
 
 import static com.sanjay.laravel.app.MyApplication.getContext;
 import static com.sanjay.laravel.app.MyApplication.session;
@@ -51,7 +53,7 @@ public class ProfileActivity extends AppCompatActivity
     public static ApiInterface apiInterface;
     private ActivityProfileBinding binding;
     MyClickHandlers handlers = new MyClickHandlers(this);
-
+    ProgressDialog myDialog = utility.showProgressDialog(MyApplication.getContext(), "some message");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +79,7 @@ public class ProfileActivity extends AppCompatActivity
         TextView nav_email = hView.findViewById(R.id.nav_email);
         nav_user.setText(session.getName());
         nav_email.setText(session.getEmail());
-        Glide.with(getContext()).load(AppConstants.BASE_URL + File.separator + session.getAvatar()).into(nav_avatar);
+        Glide.with(getContext()).load(AppConstants.BASE_URL + File.separator + "avatars" + File.separator + session.getAvatar()).into(nav_avatar);
         navigationView.setNavigationItemSelectedListener(this);
         renderProfile();
     }
@@ -154,12 +156,9 @@ public class ProfileActivity extends AppCompatActivity
      */
     private void renderProfile() {
         UserSuccessResponse model = new UserSuccessResponse();
-        final ProgressDialog progressDoalog;
-        progressDoalog = new ProgressDialog(ProfileActivity.this);
-        progressDoalog.setMax(100);
-        progressDoalog.setMessage("Its loading....");
-        progressDoalog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDoalog.show();
+
+//        myDialog.show();
+
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         Observable<UserSuccessResponse> observable = apiInterface.USER_SUCCESS_RESPONSE_OBSERVABLE(session.getToken_type() + " " + session.getToken())
                 .subscribeOn(Schedulers.newThread())
@@ -169,6 +168,7 @@ public class ProfileActivity extends AppCompatActivity
             @Override
             public void onError(Throwable e) {
 //                Toast.makeText(getContext(), "error" + e, Toast.LENGTH_SHORT).show();
+//                myDialog.dismiss();
                 Log.i("login", "onError: " + e);
                 MaterialStyledDialog dialog = new MaterialStyledDialog.Builder(ProfileActivity.this)
                         .setTitle("Error!")
@@ -195,7 +195,7 @@ public class ProfileActivity extends AppCompatActivity
 
             @Override
             public void onNext(UserSuccessResponse Listdata) {
-                progressDoalog.hide();
+//                myDialog.dismiss();
                 model.setEmail(Listdata.getEmail());
                 model.setUserName(Listdata.getUserName());
                 model.setUserAvatar(Listdata.getUserAvatar());
@@ -262,12 +262,15 @@ public class ProfileActivity extends AppCompatActivity
         File file = new File(CommonUsedMethods.getRealPathFromURI(fileUri));
 
         //creating request body for file
-        RequestBody requestFile = RequestBody.create(MediaType.parse(Objects.requireNonNull(getContentResolver().getType(fileUri))), file);
-
+//        RequestBody requestFile = RequestBody.create(MediaType.parse(Objects.requireNonNull(getContentResolver().getType(fileUri))), file);
+        // creates RequestBody instance from file
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        // MultipartBody.Part is used to send also the actual filename
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         //creating a call and calling the upload image method
-        Observable<DefaultResponse> observable = apiInterface.UPDATE_USER_AVATAR(session.getToken_type() + " " + session.getToken(), requestFile)
+        Observable<DefaultResponse> observable = apiInterface.UPDATE_USER_AVATAR(session.getToken_type() + " " + session.getToken(), body, file.getName())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
         observable.subscribe(new Observer<DefaultResponse>() {

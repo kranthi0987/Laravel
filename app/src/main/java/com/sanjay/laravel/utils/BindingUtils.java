@@ -2,13 +2,15 @@ package com.sanjay.laravel.utils;
 
 import com.sanjay.laravel.app.AppConstants;
 
+import java.io.File;
+
 public class BindingUtils {
     public static String capitalize(String text) {
         return text.toUpperCase();
     }
 
     public static String avatar(String text1) {
-        return AppConstants.BASE_URL + text1;
+        return AppConstants.BASE_URL + File.separator + "avatars" + File.separator + text1;
     }
 
     // https://stackoverflow.com/questions/9769554/how-to-convert-number-into-k-thousands-m-million-and-b-billion-suffix-in-jsp

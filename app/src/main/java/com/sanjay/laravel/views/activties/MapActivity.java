@@ -37,12 +37,13 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.sanjay.laravel.R;
 import com.sanjay.laravel.app.AppConstants;
-import com.sanjay.laravel.app.MyApplication;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import static com.sanjay.laravel.app.MyApplication.getContext;
 import static com.sanjay.laravel.app.MyApplication.session;
 import static com.sanjay.laravel.utils.CommonUsedMethods.logoutUser;
 
@@ -83,7 +84,7 @@ public class MapActivity extends AppCompatActivity
         TextView nav_email = hView.findViewById(R.id.nav_email);
         nav_user.setText(session.getName());
         nav_email.setText(session.getEmail());
-        Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + session.getAvatar()).into(nav_avatar);
+        Glide.with(getContext()).load(AppConstants.BASE_URL + File.separator + "avatars" + File.separator + session.getAvatar()).into(nav_avatar);
         navigationView.setNavigationItemSelectedListener(this);
     }
 

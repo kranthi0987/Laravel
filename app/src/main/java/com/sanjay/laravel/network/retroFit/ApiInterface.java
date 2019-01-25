@@ -11,17 +11,11 @@ import com.sanjay.laravel.models.products.ProductsResponse;
 import com.sanjay.laravel.models.registrationModel.RegisterRequest;
 import com.sanjay.laravel.models.registrationModel.RegisterSuccessResponse;
 import com.sanjay.laravel.models.userModel.UserSuccessResponse;
+import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import retrofit2.http.*;
 
 import java.util.List;
-
-import io.reactivex.Observable;
-import okhttp3.RequestBody;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.Multipart;
-import retrofit2.http.POST;
-import retrofit2.http.Part;
 
 public interface ApiInterface {
 
@@ -49,7 +43,7 @@ public interface ApiInterface {
 
     @Multipart
     @POST("/api/auth/updateavatar")
-    Observable<DefaultResponse> UPDATE_USER_AVATAR(@Header("Authorization") String headers, @Part RequestBody avatarimg);
+    Observable<DefaultResponse> UPDATE_USER_AVATAR(@Header("Authorization") String headers, @Part MultipartBody.Part file, @Part("Avatar") String name);
 
 
 }

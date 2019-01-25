@@ -1,5 +1,6 @@
 package com.sanjay.laravel.views.activties;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -12,8 +13,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
+import android.widget.ImageView;
+import android.widget.TextView;
+import com.bumptech.glide.Glide;
 import com.sanjay.laravel.R;
+import com.sanjay.laravel.app.AppConstants;
+
+import java.io.File;
+
+import static com.sanjay.laravel.app.MyApplication.getContext;
+import static com.sanjay.laravel.app.MyApplication.session;
+import static com.sanjay.laravel.utils.CommonUsedMethods.logoutUser;
 
 public class ViewProduct extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -41,6 +51,13 @@ public class ViewProduct extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View hView = navigationView.getHeaderView(0);
+        ImageView nav_avatar = hView.findViewById(R.id.nav_avatar);
+        TextView nav_user = hView.findViewById(R.id.nav_name);
+        TextView nav_email = hView.findViewById(R.id.nav_email);
+        nav_user.setText(session.getName());
+        nav_email.setText(session.getEmail());
+        Glide.with(getContext()).load(AppConstants.BASE_URL + File.separator + "avatars" + File.separator + session.getAvatar()).into(nav_avatar);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -82,22 +99,32 @@ public class ViewProduct extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_tracking) {
+            Intent i = new Intent(getApplicationContext(),
+                    TrackingActivity.class);
+            startActivity(i);
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_maps) {
+            Intent i = new Intent(getApplicationContext(),
+                    MapActivity.class);
+            startActivity(i);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_profile) {
+            Intent i = new Intent(getApplicationContext(),
+                    ProfileActivity.class);
+            startActivity(i);
 
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_logout) {
+            logoutUser();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

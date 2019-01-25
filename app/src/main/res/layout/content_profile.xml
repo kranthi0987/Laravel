@@ -61,12 +61,12 @@
                         android:textColor="#fff" />
 
                     <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-
-                        android:layout_marginTop="@dimen/fab_margin"
-                        android:padding="10dp"
-                        android:profileImage="@{BindingUtils.avatar(user.userAvatar)}" />
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/fab_margin"
+                            android:padding="10dp"
+                            android:profileImage="@{BindingUtils.avatar(user.userAvatar)}" />
                 </RelativeLayout>
                 <EditText
                     android:id="@+id/email"
