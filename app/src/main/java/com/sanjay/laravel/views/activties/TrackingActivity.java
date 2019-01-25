@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,6 +31,7 @@ import com.sanjay.laravel.R;
 import com.sanjay.laravel.app.AppConstants;
 import com.sanjay.laravel.app.MyApplication;
 import com.sanjay.laravel.tracking.DirectionsJSONParser;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -200,7 +202,7 @@ public class TrackingActivity extends AppCompatActivity
         String output = "json";
 
         // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=AIzaSyBG_crUSSMa52eX48grCu3kCn2M2oAi_Do";
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=AIzaSyC8dRdaFJm9VZtN7DUKazJ4RDBE5rHXeT8";
 
 
         return url;

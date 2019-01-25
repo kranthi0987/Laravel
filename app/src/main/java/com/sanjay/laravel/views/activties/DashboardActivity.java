@@ -13,12 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.bumptech.glide.Glide;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
@@ -30,15 +32,17 @@ import com.sanjay.laravel.network.retroFit.ApiClient;
 import com.sanjay.laravel.network.retroFit.ApiInterface;
 import com.sanjay.laravel.utils.SessionManager;
 import com.sanjay.laravel.views.adapters.ProductDataAdapter;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.sanjay.laravel.app.MyApplication.getContext;
 import static com.sanjay.laravel.utils.CommonUsedMethods.logoutUser;
@@ -105,7 +109,7 @@ public class DashboardActivity extends AppCompatActivity
         TextView nav_email = hView.findViewById(R.id.nav_email);
         nav_user.setText(session.getName());
         nav_email.setText(session.getEmail());
-        Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + session.getAvatar()).into(nav_avatar);
+        Glide.with(MyApplication.getContext()).load(AppConstants.BASE_URL + File.separator + session.getAvatar()).into(nav_avatar);
         navigationView.setNavigationItemSelectedListener(this);
 
         mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
@@ -233,8 +237,8 @@ public class DashboardActivity extends AppCompatActivity
         progressDoalog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDoalog.show();
 
-
-        Observable<List<ProductsResponse>> observable = apiInterface.PRODUCTS_RESPONSE_OBSERVABLE()
+        Log.d("dashboard", "loadproductlist:" + session.getToken_type() + " " + session.getToken());
+        Observable<List<ProductsResponse>> observable = apiInterface.PRODUCTS_RESPONSE_OBSERVABLE(session.getToken_type() + " " + session.getToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
         observable.subscribe(new Observer<List<ProductsResponse>>() {

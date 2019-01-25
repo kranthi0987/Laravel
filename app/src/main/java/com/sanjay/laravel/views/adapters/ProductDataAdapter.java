@@ -1,6 +1,7 @@
 package com.sanjay.laravel.views.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,15 +12,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.sanjay.laravel.R;
 import com.sanjay.laravel.app.AppConstants;
 import com.sanjay.laravel.app.MyApplication;
 import com.sanjay.laravel.models.products.ProductsResponse;
+import com.sanjay.laravel.views.activties.ViewProduct;
 
 import java.util.ArrayList;
 
 public class ProductDataAdapter extends RecyclerView.Adapter<ProductDataAdapter.ViewHolder> {
+
     private ArrayList<ProductsResponse> mProductsList;
     private Context mcontext;
 
@@ -55,6 +59,9 @@ public class ProductDataAdapter extends RecyclerView.Adapter<ProductDataAdapter.
         holder.productbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent i = new Intent(mcontext, ViewProduct.class);
+                i.putExtra("productid", mProductsList.get(position).getId());
+                mcontext.startActivity(i);
                 Toast.makeText(mcontext, "button clicked with id" + position, Toast.LENGTH_SHORT).show();
             }
         });

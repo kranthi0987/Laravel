@@ -3,19 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <data>
 
+        <import type="android.view.View" />
         <import type="com.sanjay.laravel.utils.BindingUtils" />
         <variable
             name="handlers"
-            type="com.sanjay.laravel.views.activties.ProfileActivity" />
+            type="com.sanjay.laravel.views.activties.ProfileActivity.MyClickHandlers" />
 
         <variable
             name="user"
             type="com.sanjay.laravel.models.userModel.UserSuccessResponse" />
     </data>
-
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

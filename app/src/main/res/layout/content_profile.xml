@@ -6,6 +6,7 @@
 
     <data>
 
+        <import type="android.view.View" />
         <import type="com.sanjay.laravel.utils.BindingUtils" />
         <variable
             name="handlers"
@@ -40,14 +41,33 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp">
 
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                <RelativeLayout
+                    android:id="@+id/imagePreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/fab_margin"
-                    android:padding="10dp"
-                    android:profileImage="@{BindingUtils.avatar(user.userAvatar)}" />
+                    android:orientation="vertical"
+                    android:padding="0dp">
 
+                    <Button
+                        android:id="@+id/uploadavatar"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="94dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/pencil"
+                        android:onClick="@{(view) ->handlers.uploadavatar(view)}"
+                        android:textColor="#fff" />
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+
+                        android:layout_marginTop="@dimen/fab_margin"
+                        android:padding="10dp"
+                        android:profileImage="@{BindingUtils.avatar(user.userAvatar)}" />
+                </RelativeLayout>
                 <EditText
                     android:id="@+id/email"
                     android:layout_width="fill_parent"
@@ -62,16 +82,16 @@
                     android:textColor="@color/input_login"
                     android:textColorHint="@color/input_login_hint" />
 
-                <!--<EditText-->
-                <!--android:id="@+id/addressid"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginBottom="10dp"-->
-                <!--android:background="@color/white"-->
-                <!--android:hint="AddressId"-->
-                <!--android:padding="10dp"-->
-                <!--android:singleLine="true"-->
-                <!--android:text="@{user.addressId}"-->
+                <EditText
+                    android:id="@+id/addressid"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:hint="AddressId"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:text="@{user.addressId}"
                 />
 
                 <EditText
@@ -114,7 +134,7 @@
                     android:layout_marginTop="20dip"
                     android:background="@color/btn_login_bg"
                     android:text="UPDATE"
-                    android:onClick="@{handlers::onFabClicked}"
+                    android:onClick="@{(view) ->handlers.updateuserdetails(view)}"
                     android:textColor="@color/btn_login" />
 
             </LinearLayout>

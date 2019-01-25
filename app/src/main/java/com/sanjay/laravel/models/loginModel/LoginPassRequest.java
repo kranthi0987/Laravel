@@ -1,7 +1,4 @@
 package com.sanjay.laravel.models.loginModel;
-
-import android.text.TextUtils;
-import android.util.Patterns;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -16,12 +13,6 @@ public class LoginPassRequest {
     @SerializedName("remember_me")
     @Expose
     private Boolean rememberMe;
-
-    public LoginPassRequest(String email, String password, Boolean rememberMe) {
-        this.email = email;
-        this.password = password;
-        this.rememberMe = rememberMe;
-    }
 
     public String getEmail() {
         return email;
@@ -45,10 +36,6 @@ public class LoginPassRequest {
 
     public void setRememberMe(Boolean rememberMe) {
         this.rememberMe = rememberMe;
-    }
-
-    public boolean isInputDataValid() {
-        return !TextUtils.isEmpty(getEmail()) && Patterns.EMAIL_ADDRESS.matcher(getEmail()).matches() && getPassword().length() > 5;
     }
 
 }

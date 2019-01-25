@@ -4,6 +4,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
 import android.widget.ImageView;
+
 import com.android.databinding.library.baseAdapters.BR;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -56,6 +57,7 @@ public class UserSuccessResponse extends BaseObservable {
     public void setId(Integer id) {
         this.id = id;
     }
+
     @Bindable
     public Integer getUserId() {
         return userId;
@@ -65,9 +67,15 @@ public class UserSuccessResponse extends BaseObservable {
         this.userId = userId;
         notifyPropertyChanged(BR.userId);
     }
+
     @Bindable
     public String getAddressId() {
         return addressId;
+    }
+
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
+        notifyPropertyChanged(BR.addressId);
     }
 
     @BindingAdapter({"android:profileImage"})
@@ -79,15 +87,12 @@ public class UserSuccessResponse extends BaseObservable {
         // If you consider Picasso, follow the below
         // Picasso.with(view.getContext()).load(imageUrl).placeholder(R.drawable.placeholder).into(view);
     }
+
     @Bindable
     public String getUserName() {
         return userName;
     }
 
-    public void setAddressId(String addressId) {
-        this.addressId = addressId;
-        notifyPropertyChanged(BR.addressId);
-    }
 
     @Bindable
     public String getEmail() {
@@ -113,10 +118,17 @@ public class UserSuccessResponse extends BaseObservable {
         this.userName = userName;
 
     }
+
     @Bindable
     public String getUserAvatar() {
         return userAvatar;
     }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
+        notifyPropertyChanged(BR.userAvatar);
+    }
+
     public Integer getActive() {
         return active;
     }
@@ -125,10 +137,6 @@ public class UserSuccessResponse extends BaseObservable {
         this.active = active;
     }
 
-    public void setUserAvatar(String userAvatar) {
-        this.userAvatar = userAvatar;
-        notifyPropertyChanged(BR.userAvatar);
-    }
 
     public String getCreatedAt() {
         return createdAt;
@@ -155,13 +163,13 @@ public class UserSuccessResponse extends BaseObservable {
     }
 
 
-    @Bindable
-    public String getUserOtherDetails() {
-        return userOtherDetails;
-    }
-
     public void setUserOtherDetails(String userOtherDetails) {
         this.userOtherDetails = userOtherDetails;
         notifyPropertyChanged(BR.userOtherDetails);
+    }
+
+    @Bindable
+    public String getUserOtherDetails() {
+        return userOtherDetails;
     }
 }

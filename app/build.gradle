@@ -4,8 +4,6 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'realm-android'
 
-
-
 //apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -90,6 +88,8 @@ dependencies {
     //logging and interceptor
     implementation "com.squareup.okhttp3:logging-interceptor:3.4.1"
 
+//    google
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
     //material popup
     //implementation 'cn.pedant.sweetalert:library:1.3'
 

@@ -73,5 +73,4 @@ public class UserUpdateRequest {
         this.userOtherDetails = userOtherDetails;
     }
 
-
 }
