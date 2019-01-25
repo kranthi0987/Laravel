@@ -20,7 +20,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.google.gson.JsonObject;
@@ -32,10 +31,6 @@ import com.sanjay.laravel.models.userModel.UserSuccessResponse;
 import com.sanjay.laravel.network.retroFit.ApiClient;
 import com.sanjay.laravel.network.retroFit.ApiInterface;
 import com.sanjay.laravel.utils.CommonUsedMethods;
-
-import java.io.File;
-import java.util.Objects;
-
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -43,6 +38,9 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+
+import java.io.File;
+import java.util.Objects;
 
 import static com.sanjay.laravel.app.MyApplication.getContext;
 import static com.sanjay.laravel.app.MyApplication.session;
@@ -52,7 +50,7 @@ public class ProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     public static ApiInterface apiInterface;
     private ActivityProfileBinding binding;
-
+    MyClickHandlers handlers = new MyClickHandlers(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +58,11 @@ public class ProfileActivity extends AppCompatActivity
 //        setContentView(R.layout.activity_profile);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
 //        binding.setCallback(this);
+//        binding.setHandlers(handlers);
+        binding.setHandlers(handlers);
+//        binding.getHandlers();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -203,6 +202,7 @@ public class ProfileActivity extends AppCompatActivity
                 model.setUserPhoneNumber(Listdata.getUserPhoneNumber());
                 model.setUserOtherDetails(Listdata.getUserOtherDetails());
                 model.setAddressId(Listdata.getAddressId());
+
                 binding.setUser(model);
 
             }
@@ -305,6 +305,7 @@ public class ProfileActivity extends AppCompatActivity
         public MyClickHandlers(Context context) {
             this.context = context;
         }
+
         public void onFabClicked(View view) {
             Toast.makeText(getApplicationContext(), "FAB clicked!", Toast.LENGTH_SHORT).show();
         }
