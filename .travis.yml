@@ -59,6 +59,8 @@ before_script:
 script:
 - "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
 - ./gradlew assembleDebug --stacktrace
+- sudo apt-get update && sudo apt-get install oracle-java8-installer
+- java -version
 
 before_deploy:
 - cp $TRAVIS_BUILD_DIR/example_keystore.jks $HOME
